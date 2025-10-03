@@ -1,0 +1,2137 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="SKZ Expedition - Your Ultimate Travel Experience">
+    <meta name="keywords" content="Travel, Adventure, Expedition, Explore, SKZ Expedition">
+    <meta name="author" content="SKZ Expedition">
+    <title>SKZ Expedition - Explore the World</title>
+    <link href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@300;400;600&family=Roboto:wght@300;400;500;700&display=swap" rel="stylesheet">
+    <style>
+        /* Global Styles */
+        body {
+            font-family: 'Open Sans', sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f0f0f0;
+            color: #333;
+            display: flex;
+            flex-direction: column;
+            min-height: 100vh;
+        }
+        body.modal-open {
+            overflow: hidden;
+        }
+
+        html {
+            scroll-behavior: smooth;
+        }
+
+        header {
+            background-color: #222;
+            padding: 20px 30px;
+            color: white;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            position: relative;
+            z-index: 1002;
+        }
+
+        header .logo a {
+            text-decoration: none;
+            color: white;
+            font-size: 24px;
+            font-weight: 700;
+            display: flex;
+            align-items: center;
+        }
+
+        header .logo img {
+            height: 50px;
+            margin-right: 10px;
+            vertical-align: middle;
+        }
+
+        .nav-links {
+            list-style-type: none;
+            margin: 0;
+            padding: 0;
+            display: flex;
+        }
+
+        .nav-links li {
+            margin: 0 15px;
+        }
+
+        .nav-links a {
+            text-decoration: none;
+            color: white;
+            font-size: 20px;
+            transition: color 0.3s ease;
+        }
+
+        .nav-links a:hover {
+            color: #ff6347;
+        }
+
+        /* Hero Section with Static Image Background */
+        .hero-section {
+            position: relative;
+            height: 500px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            color: white;
+            background: url('https://images.unsplash.com/photo-1464822759023-fed622ff2c3b?ixlib=rb-1.2.1&auto=format&fit=crop&w=1950&q=80') no-repeat center center/cover;
+        }
+        
+        .hero-section::after {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.5);
+            z-index: 2;
+        }
+        
+        .hero-content {
+            position: relative;
+            z-index: 3;
+            width: 90%;
+            max-width: 800px;
+        }
+
+        .hero-content h1 {
+            font-size: 60px;
+            margin-bottom: 20px;
+            animation: fadeInDown 1s ease;
+        }
+
+        .hero-content p {
+            font-size: 24px;
+            margin-bottom: 30px;
+            animation: fadeInUp 1s ease;
+        }
+        
+        .hero-search-form {
+            display: flex;
+            max-width: 600px;
+            margin: 30px auto 0;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+            border-radius: 30px;
+            animation: fadeIn 1.5s ease;
+        }
+        
+        #heroSearchInput {
+            flex-grow: 1;
+            padding: 18px 25px;
+            font-size: 18px;
+            border: none;
+            border-radius: 30px 0 0 30px;
+            outline: none;
+            color: #333;
+        }
+
+        .hero-search-form button {
+            padding: 18px 30px;
+            font-size: 18px;
+            font-weight: bold;
+            background-color: #ff6347;
+            color: white;
+            border: none;
+            border-radius: 0 30px 30px 0;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+        }
+        
+        .hero-search-form button:hover {
+            background-color: #e5533d;
+        }
+
+        /* Trip Genie Section */
+        .trip-genie-section {
+            padding: 80px 20px;
+            text-align: center;
+            background-color: #eef2f5;
+        }
+        .trip-genie-section h2 { font-size: 48px; margin-bottom: 15px; }
+        .trip-genie-section .subheading { font-size: 20px; margin-bottom: 40px; color: #555; max-width: 800px; margin-left: auto; margin-right: auto; }
+        .genie-container { max-width: 800px; margin: 0 auto; background: #fff; padding: 30px 40px; border-radius: 12px; box-shadow: 0 10px 30px rgba(0,0,0,0.1); overflow: hidden; }
+        .genie-step { display: none; animation: slideIn 0.5s forwards; }
+        .genie-step.active { display: block; }
+        .genie-step h3 { font-size: 28px; margin-bottom: 30px; color: #333; }
+        .options-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(150px, 1fr)); gap: 20px; }
+        .option-card { background: #f8f9fa; border: 2px solid #ddd; border-radius: 8px; padding: 20px; cursor: pointer; transition: all 0.3s ease; text-align: center; }
+        .option-card:hover { transform: translateY(-5px); box-shadow: 0 8px 20px rgba(0,0,0,0.1); border-color: #ff6347; }
+        .option-card .icon { font-size: 48px; }
+        .option-card p { font-size: 18px; font-weight: 600; margin: 10px 0 0; }
+        .budget-slider-container { margin: 30px 10px 0; }
+        .budget-slider-container input[type="range"] { width: 100%; cursor: pointer; }
+        .budget-slider-container #budgetValue { font-size: 24px; font-weight: bold; color: #ff6347; margin-top: 10px; }
+        .genie-button { padding: 15px 40px; font-size: 20px; font-weight: bold; background-color: #ff6347; color: white; border: none; border-radius: 8px; cursor: pointer; transition: all 0.3s ease; margin-top: 30px; }
+        .genie-button:hover { background-color: #e5533d; transform: translateY(-2px); box-shadow: 0 4px 15px rgba(0,0,0,0.2); }
+        .genie-response { margin-top: 30px; }
+
+        /* Services Section */
+        .services-section { padding: 60px 20px; background-color: #fff; text-align: center; }
+        .services-section h2 { font-size: 48px; margin-bottom: 30px; }
+        .search-container { margin-bottom: 30px; max-width: 500px; margin-left: auto; margin-right: auto; }
+        #destinationSearch { width: 100%; padding: 15px; font-size: 18px; border: 2px solid #ccc; border-radius: 25px; box-sizing: border-box; transition: all 0.3s ease; }
+        #destinationSearch:focus { border-color: #ff6347; box-shadow: 0 0 8px rgba(255, 99, 71, 0.5); outline: none; }
+        .filter-group { margin-bottom: 15px; }
+        .filter-group .filter-label { font-weight: 600; font-size: 18px; color: #555; margin-bottom: 10px; }
+        .filter-buttons { display: flex; justify-content: center; flex-wrap: wrap; gap: 10px; }
+        .filter-btn { padding: 10px 20px; margin: 0; background-color: #f0f0f0; border: none; border-radius: 20px; cursor: pointer; transition: all 0.3s ease; }
+        .filter-btn.active { background-color: #ff6347; color: white; }
+        .service-list { margin-top: 40px; display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 20px; text-align: left; font-size: 18px; }
+        .service-item { background-color: #f0f0f0; padding: 20px; border-radius: 8px; box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); transition: all 0.3s ease; position: relative; overflow: hidden; cursor: pointer; }
+        .service-item:hover { transform: translateY(-10px); box-shadow: 0 10px 20px rgba(0,0,0,0.2); }
+        .service-item::before { content: ''; position: absolute; top: 0; left: 0; width: 100%; height: 5px; background-color: #ff6347; transform: scaleX(0); transition: transform 0.3s ease; }
+        .service-item:hover::before { transform: scaleX(1); }
+        .service-item img { width: 100%; height: 200px; object-fit: cover; border-radius: 8px; margin-bottom: 15px; transition: transform 0.5s ease; }
+        .service-item:hover img { transform: scale(1.1); }
+        .service-item h3 { font-size: 24px; margin-bottom: 10px; transition: color 0.3s ease; }
+        .service-item:hover h3 { color: #ff6347; }
+        .no-results { display: none; margin-top: 20px; font-size: 20px; color: #777; }
+
+        /* Video Reviews Section */
+        .reviews-section {
+            padding: 60px 20px;
+            background-color: #eef2f5;
+            text-align: center;
+        }
+        .reviews-section h2 {
+            font-size: 48px;
+            margin-bottom: 40px;
+        }
+        .reviews-container {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+            gap: 30px;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+        .review-card {
+            background-color: #fff;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.08);
+            transition: all 0.3s ease;
+        }
+        .review-card:hover {
+            transform: translateY(-8px);
+            box-shadow: 0 8px 25px rgba(0,0,0,0.12);
+        }
+        .video-wrapper {
+            position: relative;
+            padding-bottom: 56.25%; /* 16:9 Aspect Ratio */
+            height: 0;
+            overflow: hidden;
+            border-radius: 8px;
+            margin-bottom: 15px;
+        }
+        .video-wrapper iframe {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            border: 0;
+        }
+        .reviewer-name {
+            font-size: 18px;
+            font-weight: 700;
+            color: #333;
+            margin: 10px 0 5px;
+        }
+        .review-quote {
+            font-size: 16px;
+            font-style: italic;
+            color: #555;
+            margin: 0;
+        }
+        
+        /* --- START: New About Section Styles --- */
+        .about-section { 
+            padding: 80px 20px; 
+            background-color: #fff; 
+        }
+        .about-section h2 {
+            text-align: center;
+            font-size: 48px;
+            margin-bottom: 50px;
+        }
+        .about-container {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 50px;
+            max-width: 1200px;
+            margin: 0 auto;
+            flex-wrap: wrap;
+        }
+        .ceo-profile {
+            flex: 1;
+            min-width: 280px;
+            text-align: center;
+            background-color: #f8f9fa;
+            padding: 30px;
+            border-radius: 12px;
+            box-shadow: 0 8px 25px rgba(0,0,0,0.08);
+        }
+        .ceo-profile img {
+            width: 180px;
+            height: 180px;
+            border-radius: 50%;
+            object-fit: cover;
+            border: 6px solid #ff6347;
+            margin-bottom: 20px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.15);
+        }
+        .ceo-profile h3 {
+            font-size: 26px;
+            margin-bottom: 5px;
+            font-weight: 700;
+        }
+        .ceo-profile .ceo-title {
+            font-size: 18px;
+            color: #ff6347;
+            font-weight: 600;
+            margin: 0;
+        }
+        .about-text-content {
+            flex: 2;
+            min-width: 300px;
+        }
+        .about-text-content h3 {
+            font-size: 28px;
+            margin-top: 0;
+            margin-bottom: 15px;
+            color: #333;
+            font-weight: 600;
+        }
+        .about-text-content p {
+            font-size: 17px;
+            line-height: 1.7;
+            color: #555;
+            margin-bottom: 20px;
+        }
+        .about-text-content ul {
+            list-style-type: none;
+            padding-left: 0;
+        }
+        .about-text-content ul li {
+            font-size: 17px;
+            color: #555;
+            margin-bottom: 15px;
+            padding-left: 30px;
+            position: relative;
+        }
+        .about-text-content ul li::before {
+            content: '✔';
+            position: absolute;
+            left: 0;
+            top: 2px;
+            color: #ff6347;
+            font-weight: bold;
+            font-size: 20px;
+        }
+        /* --- END: New About Section Styles --- */
+
+        /* This class is still used by the destination pop-up modals */
+        .destination-info { padding: 60px 20px; background-color: #f9f9f9; }
+        .destination-info h2 { font-size: 36px; margin-bottom: 20px; }
+        .destination-info h3 { font-size: 24px; margin-bottom: 15px; }
+        .destination-info ul { list-style-type: disc; padding-left: 20px; }
+        .destination-info ul li { margin-bottom: 10px; }
+        
+        .contact-section { padding: 60px 20px; background-color: #f9f9f9; text-align: center; }
+        .contact-section h2 { font-size: 48px; margin-bottom: 30px; }
+        .contact-section p { font-size: 24px; margin-bottom: 20px; }
+        .contact-section a { color: #ff6347; text-decoration: none; transition: all 0.3s ease; }
+        .contact-section a:hover { color: #e5533d; text-decoration: underline; }
+
+        /* Footer */
+        footer { background-color: #222; color: white; padding: 40px 20px; text-align: center; flex-shrink: 0; }
+        footer p { margin: 0; font-size: 18px; }
+        .footer-nav { list-style-type: none; padding: 0; margin: 30px 0 0; display: flex; justify-content: center; }
+        .footer-nav li { margin: 0 25px; }
+        .footer-nav a { text-decoration: none; color: white; font-size: 20px; transition: all 0.3s ease; }
+        .footer-nav a:hover { color: #ff6347; transform: translateY(-3px); }
+
+        /* Back to Top Button */
+        .back-to-top { position: fixed; bottom: 30px; right: 30px; width: 50px; height: 50px; background-color: #ff6347; color: white; border-radius: 50%; text-align: center; line-height: 50px; cursor: pointer; display: none; z-index: 1001; transition: all 0.3s ease; box-shadow: 0 2px 10px rgba(0,0,0,0.2); }
+        .back-to-top:hover { background-color: #e5533d; transform: translateY(-5px); }
+
+        /* Mobile Menu Button */
+        .mobile-menu-btn { display: none; background: none; border: none; color: white; font-size: 24px; cursor: pointer; position: absolute; right: 20px; top: 20px; }
+        .loading-spinner { display: none; width: 40px; height: 40px; margin: 30px auto; border: 4px solid rgba(255, 99, 71, 0.3); border-top: 4px solid #ff6347; border-radius: 50%; animation: spin 1s linear infinite; }
+        .recommendation-card, .stretch-recommendation-card { background-color: #fff; padding: 25px; margin-bottom: 20px; text-align: left; border-radius: 8px; box-shadow: 0 4px 15px rgba(0,0,0,0.08); transition: all 0.3s ease; border-left: 5px solid; }
+        .recommendation-card { border-color: #28a745; }
+        .stretch-recommendation-card { border-color: #f0ad4e; }
+        .recommendation-card:hover, .stretch-recommendation-card:hover { transform: scale(1.02); box-shadow: 0 8px 25px rgba(0,0,0,0.12); }
+        .card-header h4 { margin: 0; font-size: 24px; color: #333; }
+        .card-header p { margin: 5px 0 15px; font-weight: bold; color: #ff6347; }
+        .card-body p { margin: 5px 0 0; font-size: 16px; color: #555; }
+        
+        .modal-overlay { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0, 0, 0, 0.7); z-index: 1000; display: none; align-items: center; justify-content: center; }
+        .modal-content { background: #fff; padding: 30px; border-radius: 8px; width: 90%; max-width: 800px; max-height: 80vh; overflow-y: auto; position: relative; animation: fadeIn 0.3s; }
+        .modal-close-btn { position: absolute; top: 15px; right: 15px; font-size: 30px; font-weight: bold; color: #555; background: none; border: none; cursor: pointer; }
+        
+        /* Animations */
+        @keyframes slideIn { from { opacity: 0; transform: translateX(50px); } to { opacity: 1; transform: translateX(0); } }
+        @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
+        @keyframes fadeInDown { from { opacity: 0; transform: translateY(-20px); } to { opacity: 1; transform: translateY(0); } }
+        @keyframes fadeInUp { from { opacity: 0; transform: translateY(20px); } to { opacity: 1; transform: translateY(0); } }
+        @keyframes spin { 0% { transform: rotate(0deg); } 100% { transform: rotate(360deg); } }
+
+        /* Inquiry Form Styles */
+        .inquiry-form-container {
+            margin-top: 40px;
+            padding-top: 30px;
+            border-top: 2px solid #f0f0f0;
+        }
+
+        .inquiry-form-container h3 {
+            text-align: center;
+            margin-bottom: 25px;
+            font-size: 28px;
+            color: #333;
+        }
+
+        .inquiry-form {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 20px;
+        }
+
+        .inquiry-form .form-group {
+            display: flex;
+            flex-direction: column;
+        }
+
+        .inquiry-form .full-width {
+            grid-column: 1 / -1;
+        }
+
+        .inquiry-form label {
+            margin-bottom: 8px;
+            font-weight: 600;
+            color: #555;
+        }
+
+        .inquiry-form input,
+        .inquiry-form textarea {
+            width: 100%;
+            padding: 12px;
+            font-size: 16px;
+            border: 1px solid #ccc;
+            border-radius: 6px;
+            box-sizing: border-box;
+        }
+
+        .inquiry-form textarea {
+            resize: vertical;
+            min-height: 100px;
+        }
+
+        .inquiry-form button {
+            padding: 15px 40px;
+            font-size: 18px;
+            font-weight: bold;
+            background-color: #ff6347;
+            color: white;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            width: 100%;
+        }
+
+        .inquiry-form button:hover {
+            background-color: #e5533d;
+        }
+
+        /* Responsive Design */
+        @media (max-width: 768px) {
+            .hero-content h1, .trip-genie-section h2, .services-section h2, .reviews-section h2, .about-section h2, .contact-section h2 { font-size: 36px; }
+            .hero-content p, .trip-genie-section .subheading { font-size: 18px; }
+            .mobile-menu-btn { display: block; }
+            header { flex-direction: column; align-items: flex-start; }
+            .nav-links { display: none; width: 100%; margin-top: 10px; flex-direction: column; }
+            .nav-links.active { display: flex; }
+            .nav-links li { text-align: center; margin: 5px 0; }
+            .hero-search-form { flex-direction: column; border-radius: 8px; box-shadow: none; }
+            #heroSearchInput { border-radius: 8px; text-align: center; margin-bottom: 10px; }
+            .hero-search-form button { border-radius: 8px; }
+            .modal-content { padding: 20px; }
+            .inquiry-form {
+                grid-template-columns: 1fr;
+            }
+            .reviews-container {
+                grid-template-columns: 1fr; /* Stack reviews on mobile */
+            }
+            .about-container {
+                flex-direction: column;
+            }
+            .ceo-profile {
+                margin-bottom: 30px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <header class="header">
+        <button class="mobile-menu-btn">☰</button>
+        <div class="logo">
+            <a href="#">
+                <img src="logo.webp" alt="logo" style="height: 50px; vertical-align: middle;">
+                SKZ Expedition
+            </a>
+        </div>
+        <ul class="nav-links">
+            <li><a href="#">Home</a></li>
+            <li><a href="#trip-genie-section">Trip Genie</a></li>
+            <li><a href="#services-section">Destinations</a></li>
+            <li><a href="#reviews-section">Reviews</a></li>
+            <li><a href="#about-section">About</a></li>
+            <li><a href="#contact-section">Contact</a></li>
+        </ul>
+    </header>
+
+    <section class="hero-section">
+        <div class="hero-content">
+            <h1>Find Your Next Adventure</h1>
+            <p>Let us help you discover your perfect getaway.</p>
+            <form class="hero-search-form" id="heroSearchForm">
+                <input type="text" id="heroSearchInput" placeholder="Where do you want to go?" required>
+                <button type="submit">Search</button>
+            </form>
+        </div>
+    </section>
+
+    <section id="trip-genie-section" class="trip-genie-section">
+        <h2>Trip Genie</h2>
+        <p class="subheading">Answer three simple questions to find your perfect trip!</p>
+        <div class="genie-container">
+            <div id="step1" class="genie-step active">
+                <h3>Who are you traveling with?</h3>
+                <div class="options-grid">
+                    <div class="option-card" data-choice="solo"><div class="icon">👤</div><p>Solo</p></div>
+                    <div class="option-card" data-choice="couple"><div class="icon">❤️</div><p>Couple</p></div>
+                    <div class="option-card" data-choice="friends"><div class="icon">🧑‍🤝‍🧑</div><p>Friends</p></div>
+                    <div class="option-card" data-choice="family"><div class="icon">👨‍👩‍👧‍👦</div><p>Family</p></div>
+                </div>
+            </div>
+            <div id="step2" class="genie-step">
+                <h3>What's your travel vibe?</h3>
+                <div class="options-grid">
+                    <div class="option-card" data-choice="relaxing"><div class="icon">🧘</div><p>Relaxing</p></div>
+                    <div class="option-card" data-choice="exploring"><div class="icon">🗺️</div><p>Exploring</p></div>
+                    <div class="option-card" data-choice="adventure"><div class="icon">🧗</div><p>Adventure</p></div>
+                </div>
+            </div>
+            <div id="step3" class="genie-step">
+                <h3>What's your budget per person?</h3>
+                <div class="budget-slider-container">
+                    <input type="range" id="budgetSlider" min="2500" max="15000" value="7000" step="500">
+                    <p id="budgetValue">₹7,000</p>
+                </div>
+                <button id="findTripBtn" class="genie-button">Find My Trip</button>
+            </div>
+            <div id="step4" class="genie-step genie-response">
+                 <div class="loading-spinner" id="genieSpinner"></div>
+                 <div id="genieResults"></div>
+            </div>
+        </div>
+    </section>
+
+    <section id="services-section" class="services-section">
+        <h2>Our Popular Destinations</h2>
+        <div class="search-container">
+            <input type="text" id="destinationSearch" placeholder="Search for a destination...">
+        </div>
+        <div class="filter-group">
+            <h4 class="filter-label">Filter by State:</h4>
+            <div id="state-filters" class="filter-buttons">
+                <button class="filter-btn filter-btn-state active" data-state="all">All</button>
+                <button class="filter-btn filter-btn-state" data-state="himachal">Himachal Pradesh</button>
+                <button class="filter-btn filter-btn-state" data-state="uttarakhand">Uttarakhand</button>
+                <button class="filter-btn filter-btn-state" data-state="jammu">J&K</button>
+                <button class="filter-btn filter-btn-state" data-state="bihar">Bihar</button>
+                <button class="filter-btn filter-btn-state" data-state="uttarpradesh">Uttar Pradesh</button>
+            </div>
+        </div>
+        <div class="filter-group">
+            <h4 class="filter-label">Filter by Type:</h4>
+            <div id="type-filters" class="filter-buttons">
+                <button class="filter-btn filter-btn-type active" data-type="all">All</button>
+                <button class="filter-btn filter-btn-type" data-type="trekking">Trekking</button>
+                <button class="filter-btn filter-btn-type" data-type="spiritual">Spiritual</button>
+                <button class="filter-btn filter-btn-type" data-type="hill-station">Hill Stations</button>
+                <button class="filter-btn filter-btn-type" data-type="historical">Historical</button>
+            </div>
+        </div>
+        <div class="service-list">
+            <div class="service-item" data-modal-target="#triund-info" data-category="trekking hill-station" data-state="himachal">
+                <img src="triund.jpeg" alt="triund"><h3>Triund</h3><p>From ₹3,199</p>
+            </div>
+            <div class="service-item" data-modal-target="#kasol-info" data-category="trekking" data-state="himachal">
+                <img src="kasol.png" alt="Kasol"><h3>Kasol</h3><p>From ₹4,599</p>
+            </div>
+            <div class="service-item" data-modal-target="#manali-info" data-category="hill-station" data-state="himachal">
+                <img src="manali.png" alt="manali"><h3>Manali</h3><p>From ₹5,899</p>
+            </div>
+            <div class="service-item" data-modal-target="#solang-info" data-category="trekking" data-state="himachal">
+                <img src="solang.jpeg" alt="solang"><h3>Solang Valley</h3><p>From ₹5,999</p>
+            </div>
+            <div class="service-item" data-modal-target="#rohtang-info" data-category="trekking" data-state="himachal">
+                <img src="rohtang.jpeg" alt="rohtang"><h3>Rohtang Pass</h3><p>From ₹7,999</p>
+            </div>
+            <div class="service-item" data-modal-target="#dharamshala-info" data-category="hill-station spiritual" data-state="himachal">
+                <img src="dharamshala.jpeg" alt="dharamshala"><h3>Dharamshala</h3><p>From ₹3000</p>
+            </div>
+            <div class="service-item" data-modal-target="#mcleodganj-info" data-category="hill-station spiritual" data-state="himachal">
+                <img src="mcloedganj.jpg" alt="mcLeodganj"><h3>McLeod Ganj</h3><p>From ₹3000</p>
+            </div>
+            <div class="service-item" data-modal-target="#vaishno-info" data-category="spiritual" data-state="jammu">
+                <img src="vaishno.jpeg" alt="vaishno"><h3>Vaishno Devi</h3><p>From ₹3,299</p>
+            </div>
+            <div class="service-item" data-modal-target="#tungnath-info" data-category="trekking spiritual" data-state="uttarakhand">
+                <img src="tungnath.jpeg" alt="tungnath"><h3>Tungnath</h3><p>From ₹5,999</p>
+            </div>
+            <div class="service-item" data-modal-target="#chopta-info" data-category="trekking" data-state="uttarakhand">
+                <img src="chopta.png" alt="chopta"><h3>Chopta Valley</h3><p>From ₹8,999</p>
+            </div>
+            <div class="service-item" data-modal-target="#kedarnath-info" data-category="spiritual trekking" data-state="uttarakhand">
+                <img src="kedarnath.jpeg" alt="kedarnath"><h3>Kedarnath</h3><p>From ₹8,999</p>
+            </div>
+            <div class="service-item" data-modal-target="#badrinath-info" data-category="spiritual" data-state="uttarakhand">
+                <img src="badrinath.jpeg" alt="badrinath"><h3>Badrinath</h3><p>From ₹8,999</p>
+            </div>
+            <div class="service-item" data-modal-target="#madmaheshwar-info" data-category="trekking spiritual" data-state="uttarakhand">
+                <img src="madhya.png" alt="madhya"><h3>Madmaheshwar</h3><p>From ₹5,999</p>
+            </div>
+            <div class="service-item" data-modal-target="#gangotri-info" data-category="spiritual trekking" data-state="uttarakhand">
+                <img src="gang.jpeg" alt="gang"><h3>Gangotri</h3><p>From ₹5,499</p>
+            </div>
+            <div class="service-item" data-modal-target="#varanasi-info" data-category="spiritual historical" data-state="uttarpradesh">
+                <img src="varanasi.jpeg" alt="Varanasi"><h3>Varanasi</h3><p>From ₹4,999</p>
+            </div>
+            <div class="service-item" data-modal-target="#agra-info" data-category="historical" data-state="uttarpradesh">
+                <img src="tajmahal.png" alt="tajmahal"><h3>Taj mahal</h3><p>From ₹4,000</p>
+            </div>
+            <div class="service-item" data-modal-target="#bodhgaya-info" data-category="spiritual" data-state="bihar">
+                <img src="bodhgaya.png" alt="Bodh Gaya"><h3>Bodh Gaya</h3><p>From ₹4,499</p>
+            </div>
+            <div class="service-item" data-modal-target="#rajgir-info" data-category="spiritual historical" data-state="bihar">
+                <img src="rajgir.png" alt="Rajgir"><h3>Rajgir</h3><p>From ₹2,499</p>
+            </div>
+            <div class="service-item" data-modal-target="#sasaram-info" data-category="historical" data-state="bihar">
+                <img src="sasaram.png" alt="Sasaram"><h3>Sasaram</h3><p>From ₹2,999</p>
+            </div>
+        </div>
+        <p id="noResultsMessage" class="no-results">No destinations found.</p>
+    </section>
+<section id="reviews-section" class="reviews-section">
+  <h2>Our recent Travel</h2>
+  <div class="reviews-container">
+
+    <!-- Review 1 -->
+    <div class="review-card">
+      <div class="video-wrapper" data-video-id="JNiFWl-zvqw" onclick="playVideo(this)" style="position: relative; cursor: pointer;">
+        <img src="https://img.youtube.com/vi/JNiFWl-zvqw/maxresdefault.jpg" alt="Tungnath – World’s highest Shiva temple" style="width:100%; border-radius:10px;">
+        <span style="position:absolute; top:50%; left:50%; transform:translate(-50%,-50%); font-size:60px; color:white; text-shadow:0 0 10px black;">▶</span>
+      </div>
+      <p class="reviewer-name">Priya & Rohan</p>
+      <p class="review-quote">"Our Manali trip was a dream come true! SKZ Expedition planned everything perfectly. The views were just breathtaking."</p>
+    </div>
+
+    <!-- Review 2 -->
+    <div class="review-card">
+      <div class="video-wrapper" data-video-id="YvGuCaVTXmA" onclick="playVideo(this)" style="position: relative; cursor: pointer;">
+        <img src="https://img.youtube.com/vi/YvGuCaVTXmA/maxresdefault.jpg" alt="Vaishno Devi: A Must-Visit holy place" style="width:100%; border-radius:10px;">
+        <span style="position:absolute; top:50%; left:50%; transform:translate(-50%,-50%); font-size:60px; color:white; text-shadow:0 0 10px black;">▶</span>
+      </div>
+      <p class="reviewer-name">Aarav's Adventure Group</p>
+      <p class="review-quote">"The Triund trek was challenging but so worth it. Our guide was amazing and the camping experience was unforgettable. Highly recommended!"</p>
+    </div>
+
+    <!-- Review 3 -->
+    <div class="review-card">
+      <div class="video-wrapper" data-video-id="Qis_mPRESXM" onclick="playVideo(this)" style="position: relative; cursor: pointer;">
+        <img src="https://img.youtube.com/vi/Qis_mPRESXM/maxresdefault.jpg" alt="A trip to Himachal Pradesh, Rohtang Pass, Solang Valley" style="width:100%; border-radius:10px;">
+        <span style="position:absolute; top:50%; left:50%; transform:translate(-50%,-50%); font-size:60px; color:white; text-shadow:0 0 10px black;">▶</span>
+      </div>
+      <p class="reviewer-name">The Sharma Family</p>
+      <p class="review-quote">"A spiritual and peaceful journey to Kedarnath. SKZ handled all the logistics smoothly, letting us focus on the experience."</p>
+    </div>
+
+  </div>
+</section>
+
+<script>
+  function playVideo(el) {
+    const videoId = el.getAttribute('data-video-id');
+    const iframe = document.createElement('iframe');
+    iframe.setAttribute('src', `https://www.youtube.com/embed/${videoId}?autoplay=1`);
+    iframe.setAttribute('frameborder', '0');
+    iframe.setAttribute('allow', 'accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture');
+    iframe.setAttribute('allowfullscreen', true);
+    iframe.style.width = '100%';
+    iframe.style.height = '315px';
+
+    // Replace thumbnail with iframe
+    el.innerHTML = '';
+    el.appendChild(iframe);
+  }
+</script>
+
+
+    
+    <!-- === START: REVAMPED ABOUT SECTION === -->
+    <section id="about-section" class="about-section">
+        <h2>About SKZ Expedition</h2>
+        <div class="about-container">
+            <div class="ceo-profile">
+                <!-- IMPORTANT: Replace the 'src' with the actual path to your CEO's image -->
+                <img src="sanket.jpeg" alt="CEO of SKZ Expedition">
+                <h3>Sanket Kumar Azad</h3>
+                <p class="ceo-title">Founder & Chief Explorer</p>
+            </div>
+            <div class="about-text-content">
+                <h3>Our Philosophy</h3>
+                <p>At SKZ Expedition, we believe travel is more than visiting new places; it’s about creating lasting memories and connecting with the world. Founded by passionate explorers, our mission is to provide seamless, authentic, and unforgettable travel experiences. We are driven by a love for exploration and a commitment to responsible tourism, ensuring every detail is thoughtfully planned.</p>
+                <h3>Why Travel With Us?</h3>
+                <ul>
+                    <li><strong>Personalized Itineraries:</strong> We craft journeys that match your unique interests, budget, and travel style.</li>
+                    <li><strong>Expert Local Guides:</strong> Our friendly local guides offer insights and stories you won’t find in a guidebook.</li>
+                    <li><strong>Safety and Comfort:</strong> Your well-being is our top priority. We adhere to the highest safety standards.</li>
+                    <li><strong>Authentic Experiences:</strong> Our trips connect you with local communities for genuine, meaningful interactions.</li>
+                </ul>
+                <p>Join us at SKZ Expedition, and let’s explore the world together. Your next great adventure is just a click away! 🌍✨</p>
+            </div>
+        </div>
+    </section>
+    <!-- === END: REVAMPED ABOUT SECTION === -->
+
+    <section id="contact-section" class="contact-section">
+        <h2>Contact Us</h2>
+        <p>Email: <a href="mailto:sanketazad20003@gmail.com">sanketazad20003@gmail.com</a></p>
+        <p>Mobile: <a href="tel:7061064894">7061064894</a></p>
+    </section>
+
+    <footer>
+        <p>&copy; <span id="current-year"></span> SKZ Expedition. All rights reserved.</p>
+        <ul class="footer-nav">
+            <li><a href="#">Home</a></li>
+            <li><a href="#trip-genie-section">Trip Genie</a></li>
+            <li><a href="#services-section">Destinations</a></li>
+            <li><a href="#reviews-section">Reviews</a></li>
+            <li><a href="#about-section">About</a></li>
+            <li><a href="#contact-section">Contact</a></li>
+        </ul>
+    </footer>
+
+    <div class="back-to-top">↑</div>
+
+    <div id="destinationModal" class="modal-overlay">
+        <div class="modal-content">
+            <button class="modal-close-btn">&times;</button>
+            <div id="modalBody"></div>
+        </div>
+    </div>
+
+    <div style="display: none;">
+        <div id="triund-info" class="destination-info">
+            <h2>Triund Trek</h2>
+            <p>Triund Trek is one of the most famous short treks in Himachal Pradesh, located near McLeod Ganj and Dharamshala. Situated at an altitude of 2,850 meters, Triund is known for its breathtaking views of the Dhauladhar mountains on one side and the Kangra Valley on the other. It is often called the “crown jewel of Dharamshala”, making it a must-visit for beginners as well as experienced trekkers.</p>
+            <h3>🥾 Why You Should Do the Triund Trek</h3>
+            <ul>
+                <li>Easy to moderate difficulty – perfect for beginners.</li>
+                <li>Just 9 km from McLeod Ganj – ideal weekend trek.</li>
+                <li>Panoramic views of snow-covered peaks and lush valleys.</li>
+                <li>Amazing sunrise and sunset photography spots.</li>
+                <li>Camping experience under a star-filled sky.</li>
+            </ul>
+            <h3>📍 Triund Trek Details</h3>
+            <ul>
+                <li><strong>Starting Point:</strong> McLeod Ganj / Dharamkot / Gallu Devi Temple</li>
+                <li><strong>Trek Distance:</strong> ~9 km (one way)</li>
+                <li><strong>Trek Duration:</strong> 4–5 hours (one way)</li>
+                <li><strong>Altitude:</strong> 2,850 m (9,350 ft)</li>
+                <li><strong>Difficulty Level:</strong> Easy to Moderate</li>
+                <li><strong>Ideal For:</strong> Solo travelers, groups, students, nature lovers</li>
+            </ul>
+            <h3>⏰ Best Time to Visit Triund</h3>
+            <ul>
+                <li><strong>March to June:</strong> Pleasant weather, clear skies – most popular season.</li>
+                <li><strong>September to November:</strong> Lush greenery after monsoon, best for photography.</li>
+                <li><strong>December to February:</strong> Snow trek (challenging but beautiful).</li>
+                <li><strong>❌ Avoid July–August (monsoon season, slippery trails).</strong></li>
+            </ul>
+            <h3>🚍 How to Reach Triund</h3>
+            <ul>
+                <li><strong>By Air:</strong> Nearest airport is Gaggal (Kangra) – 18 km from Dharamshala.</li>
+                <li><strong>By Train:</strong> Pathankot Railway Station (~90 km), then taxi/bus to McLeod Ganj.</li>
+                <li><strong>By Road:</strong> Overnight Volvo buses from Delhi & Chandigarh to Dharamshala.</li>
+            </ul>
+            <h3>⛺ Camping & Stay Options</h3>
+            <p>Camping is allowed at Triund top, but tents should be pre-booked during weekends and peak season. Budget hotels, guesthouses, and homestays available in McLeod Ganj and Dharamkot.</p>
+            <h3>✅ Tips for Triund Trek</h3>
+            <ul>
+                <li>Carry at least 2 liters of water, snacks, and energy bars.</li>
+                <li>Wear comfortable trekking shoes and carry a light jacket.</li>
+                <li>Start early to avoid strong afternoon sun.</li>
+                <li>Keep the trail clean – follow eco-friendly trekking practices.</li>
+                <li>No vehicles go to Triund – it is a pure trekking trail.</li>
+            </ul>
+            <div class="inquiry-form-container">
+                <h3>Book Your Adventure!</h3>
+                <form class="inquiry-form" action="https://formspree.io/f/mzzjgvdv" method="POST">
+                    <input type="hidden" name="destination" value="Triund Trek">
+                    <div class="form-group"><label for="name-triund">Full Name</label><input type="text" id="name-triund" name="name" required></div>
+                    <div class="form-group"><label for="email-triund">Email Address</label><input type="email" id="email-triund" name="email" required></div>
+                    <div class="form-group"><label for="phone-triund">Phone Number</label><input type="tel" id="phone-triund" name="phone"></div>
+                    <div class="form-group"><label for="travelers-triund">Number of Travelers</label><input type="number" id="travelers-triund" name="travelers" min="1" required></div>
+                    <div class="form-group full-width"><label for="date-triund">Preferred Start Date</label><input type="date" id="date-triund" name="date"></div>
+                    <div class="form-group full-width"><label for="message-triund">Your Message (optional)</label><textarea id="message-triund" name="message"></textarea></div>
+                    <div class="form-group full-width"><button type="submit">Send Inquiry</button></div>
+                </form>
+            </div>
+        </div>
+        <div id="kasol-info" class="destination-info">
+             <h2>Kasol – Mini Israel of India</h2>
+             <p>Kasol is a beautiful hamlet located in the Parvati Valley of Himachal Pradesh, along the banks of the Parvati River. Situated at an altitude of around 1,580 meters (5,180 ft), Kasol is famous for its hippie culture, scenic mountains, cafes, trekking trails, and Israeli influence, which is why it’s often called the “Mini Israel of India.” It has become one of the most popular destinations for backpackers, solo travelers, and nature lovers seeking peace and adventure in the Himalayas.</p>
+            <h3>🌄 Why Visit Kasol?</h3>
+            <ul>
+                <li>Known for serene landscapes and riverfront views.</li>
+                <li>Hub for treks like Kheerganga, Tosh, Malana, and Chalal.</li>
+                <li>Famous for Israeli food, German bakeries, and vibrant cafes.</li>
+                <li>A favorite spot for backpackers from around the world.</li>
+                <li>Perfect for camping, bonfires, and stargazing.</li>
+            </ul>
+            <h3>📍 Kasol Travel Details</h3>
+            <ul>
+                <li><strong>Location:</strong> Parvati Valley, Himachal Pradesh</li>
+                <li><strong>Altitude:</strong> 1,580 m (5,180 ft)</li>
+                <li><strong>Ideal Trip Duration:</strong> 3–4 days</li>
+                <li><strong>Best For:</strong> Backpackers, trekkers, solo travelers, couples, nature lovers</li>
+            </ul>
+            <h3>⏰ Best Time to Visit Kasol</h3>
+            <ul>
+                <li><strong>March to June:</strong> Pleasant weather, perfect for trekking and camping.</li>
+                <li><strong>September to November:</strong> Lush greenery, clear skies, and fewer crowds.</li>
+                <li><strong>December to February:</strong> Snowfall season, ideal for winter lovers.</li>
+                <li><strong>❌ Avoid July–August (monsoon season, heavy rainfall and landslides possible).</strong></li>
+            </ul>
+            <h3>🚍 How to Reach Kasol</h3>
+            <ul>
+                <li><strong>By Air:</strong> Nearest airport – Bhuntar Airport (~31 km).</li>
+                <li><strong>By Train:</strong> Joginder Nagar railway station (~144 km), Pathankot (~296 km).</li>
+                <li><strong>By Road:</strong> Well-connected by buses/taxis from Delhi, Chandigarh, Manali, and Bhuntar.</li>
+            </ul>
+            <h3>🏕️ Things to Do in Kasol</h3>
+            <ul>
+                <li>Trek to Kheerganga, Tosh, Malana, and Chalal.</li>
+                <li>Relax by the Parvati River.</li>
+                <li>Explore Israeli cafes like Jim Morrison Café, Evergreen Café, and Buddha Place.</li>
+                <li>Attend music festivals and cultural events.</li>
+                <li>Try local Himachali food and fresh trout fish.</li>
+            </ul>
+            <h3>✅ Travel Tips for Kasol</h3>
+            <ul>
+                <li>Carry warm clothes – nights can be chilly even in summer.</li>
+                <li>Book stays in advance during peak season.</li>
+                <li>Respect local culture, especially in villages like Malana.</li>
+                <li>Network connectivity is limited – enjoy the digital detox!</li>
+                <li>Keep the valley clean – practice eco-friendly travel.</li>
+            </ul>
+            <div class="inquiry-form-container">
+                <h3>Book Your Adventure!</h3>
+                <form class="inquiry-form" action="https://formspree.io/f/mzzjgvdv" method="POST">
+                    <input type="hidden" name="destination" value="Kasol">
+                    <div class="form-group"><label for="name-kasol">Full Name</label><input type="text" id="name-kasol" name="name" required></div>
+                    <div class="form-group"><label for="email-kasol">Email Address</label><input type="email" id="email-kasol" name="email" required></div>
+                    <div class="form-group"><label for="phone-kasol">Phone Number</label><input type="tel" id="phone-kasol" name="phone"></div>
+                    <div class="form-group"><label for="travelers-kasol">Number of Travelers</label><input type="number" id="travelers-kasol" name="travelers" min="1" required></div>
+                    <div class="form-group full-width"><label for="date-kasol">Preferred Start Date</label><input type="date" id="date-kasol" name="date"></div>
+                    <div class="form-group full-width"><label for="message-kasol">Your Message (optional)</label><textarea id="message-kasol" name="message"></textarea></div>
+                    <div class="form-group full-width"><button type="submit">Send Inquiry</button></div>
+                </form>
+            </div>
+        </div>
+        <div id="manali-info" class="destination-info">
+            <h2>Manali – The Heart of Himachal Pradesh</h2>
+            <p>Manali is one of the most popular hill stations in India, located in the Kullu Valley of Himachal Pradesh at an altitude of 2,050 meters (6,730 ft). Known as the “Valley of the Gods,” Manali attracts millions of tourists every year for its snow-capped peaks, adventure sports, temples, vibrant markets, and honeymoon vibes. It is the perfect destination for families, couples, backpackers, and adventure seekers.</p>
+            <h3>🌄 Why Visit Manali?</h3>
+            <ul>
+                <li>Famous honeymoon and family holiday destination.</li>
+                <li>Gateway to Rohtang Pass and Atal Tunnel.</li>
+                <li>Hub for adventure sports: paragliding, skiing, rafting, and trekking.</li>
+                <li>Surrounded by apple orchards, waterfalls, and pine forests.</li>
+                <li>Mix of culture, history, and natural beauty.</li>
+            </ul>
+            <h3>📍 Manali Travel Details</h3>
+            <ul>
+                <li><strong>Location:</strong> Kullu District, Himachal Pradesh</li>
+                <li><strong>Altitude:</strong> 2,050 m (6,730 ft)</li>
+                <li><strong>Ideal Trip Duration:</strong> 4–6 days</li>
+                <li><strong>Best For:</strong> Families, couples, adventure lovers, nature seekers</li>
+            </ul>
+            <h3>⏰ Best Time to Visit Manali</h3>
+            <ul>
+                <li><strong>March to June:</strong> Summer season, perfect for sightseeing and adventure activities.</li>
+                <li><strong>October to February:</strong> Winter season, snowfall and skiing – best for honeymoon couples.</li>
+                <li><strong>July to September:</strong> Monsoon season, heavy rains – less recommended.</li>
+            </ul>
+            <h3>🚍 How to Reach Manali</h3>
+            <ul>
+                <li><strong>By Air:</strong> Nearest airport – Bhuntar (Kullu) ~50 km away.</li>
+                <li><strong>By Train:</strong> Nearest railway stations – Joginder Nagar (~163 km), Chandigarh (~310 km).</li>
+                <li><strong>By Road:</strong> Well-connected by buses, taxis, and private cars from Delhi, Chandigarh, and Shimla.</li>
+            </ul>
+            <h3>🏞️ Top Attractions in Manali</h3>
+            <ul>
+                <li><strong>Rohtang Pass & Atal Tunnel</strong> – Snow paradise and adventure hub.</li>
+                <li><strong>Solang Valley</strong> – Skiing, paragliding, zorbing, and ropeway rides.</li>
+                <li><strong>Hadimba Temple</strong> – Ancient wooden temple surrounded by deodar forest.</li>
+                <li><strong>Old Manali</strong> – Cafes, bohemian vibe, and laid-back stays.</li>
+                <li><strong>Vashisht Hot Springs</strong> – Natural sulfur springs and temples.</li>
+                <li><strong>Manikaran Sahib (nearby)</strong> – Famous Sikh Gurudwara and hot springs.</li>
+            </ul>
+            <h3>🏕️ Things to Do in Manali</h3>
+            <ul>
+                <li>Adventure sports – paragliding, rafting, skiing, trekking.</li>
+                <li>Shopping at Mall Road – woolens, handicrafts, souvenirs.</li>
+                <li>Café hopping in Old Manali.</li>
+                <li>Camping and bonfire by the Beas River.</li>
+                <li>Photography at apple orchards and waterfalls.</li>
+            </ul>
+            <h3>✅ Travel Tips for Manali</h3>
+            <ul>
+                <li>Carry woolens even in summer – nights can be chilly.</li>
+                <li>Book hotels/flights in advance during peak honeymoon season.</li>
+                <li>Check road conditions before visiting Rohtang Pass (requires a permit).</li>
+                <li>Respect local culture and traditions.</li>
+                <li>Avoid heavy travel during monsoons (landslides possible).</li>
+            </ul>
+            <div class="inquiry-form-container">
+                <h3>Book Your Adventure!</h3>
+                <form class="inquiry-form" action="https://formspree.io/f/mzzjgvdv" method="POST">
+                    <input type="hidden" name="destination" value="Manali">
+                    <div class="form-group"><label for="name-manali">Full Name</label><input type="text" id="name-manali" name="name" required></div>
+                    <div class="form-group"><label for="email-manali">Email Address</label><input type="email" id="email-manali" name="email" required></div>
+                    <div class="form-group"><label for="phone-manali">Phone Number</label><input type="tel" id="phone-manali" name="phone"></div>
+                    <div class="form-group"><label for="travelers-manali">Number of Travelers</label><input type="number" id="travelers-manali" name="travelers" min="1" required></div>
+                    <div class="form-group full-width"><label for="date-manali">Preferred Start Date</label><input type="date" id="date-manali" name="date"></div>
+                    <div class="form-group full-width"><label for="message-manali">Your Message (optional)</label><textarea id="message-manali" name="message"></textarea></div>
+                    <div class="form-group full-width"><button type="submit">Send Inquiry</button></div>
+                </form>
+            </div>
+        </div>
+        <div id="solang-info" class="destination-info">
+            <h2>Solang Valley – Adventure Capital of Manali</h2>
+            <p>Solang Valley, also known as the “Snow Valley”, is one of the most famous tourist destinations near Manali, Himachal Pradesh. Located about 14 km from Manali, this valley lies between Solang village and Beas Kund. Surrounded by snow-capped peaks and glaciers, Solang Valley is best known for adventure sports, skiing, paragliding, and cable car rides. It is the perfect spot for families, honeymooners, and thrill-seekers visiting Manali.</p>
+            <h3>🌄 Why Visit Solang Valley?</h3>
+            <ul>
+                <li>Hub for adventure activities – skiing, paragliding, snowboarding, zorbing, ATV rides.</li>
+                <li>Breathtaking views of the Himalayan peaks and Beas River.</li>
+                <li>Ropeway ride offering panoramic valley views.</li>
+                <li>Winter wonderland with snow activities from Dec–Feb.</li>
+                <li>Summer activities like paragliding, horse riding, and trekking.</li>
+            </ul>
+            <h3>📍 Solang Valley Travel Details</h3>
+            <ul>
+                <li><strong>Location:</strong> 14 km from Manali, Himachal Pradesh</li>
+                <li><strong>Altitude:</strong> ~2,560 m (8,400 ft)</li>
+                <li><strong>Best For:</strong> Adventure lovers, families, couples, photography enthusiasts</li>
+                <li><strong>Ideal Trip Duration:</strong> Half-day to 1 day</li>
+            </ul>
+            <h3>⏰ Best Time to Visit Solang Valley</h3>
+            <ul>
+                <li><strong>Summer (April–June):</strong> Paragliding, zorbing, horse riding, ropeway rides.</li>
+                <li><strong>Winter (December–February):</strong> Skiing, snowboarding, snow scooter rides.</li>
+                <li><strong>Monsoon (July–September):</strong> Avoid due to rains and landslides.</li>
+            </ul>
+            <h3>🚍 How to Reach Solang Valley</h3>
+            <ul>
+                <li><strong>From Manali:</strong> 30–45 minutes by taxi, local bus, or rented bike/car.</li>
+                <li><strong>Nearest Airport:</strong> Bhuntar Airport (50 km from Manali).</li>
+                <li><strong>Nearest Railway Station:</strong> Joginder Nagar (~165 km) or Chandigarh (~310 km).</li>
+            </ul>
+            <h3>🎯 Adventure Activities in Solang Valley</h3>
+            <ul>
+                <li><strong>Paragliding</strong> – Fly above the valley with stunning Himalayan views.</li>
+                <li><strong>Skiing & Snowboarding</strong> – Popular in winters (Dec–Feb).</li>
+                <li><strong>Zorbing</strong> – Rolling downhill inside a giant ball (summer).</li>
+                <li><strong>ATV & Snow Scooter Rides</strong> – Thrilling snow adventures.</li>
+                <li><strong>Ropeway (Cable Car Ride)</strong> – Scenic ride with a bird’s-eye view of the valley.</li>
+                <li><strong>Trekking & Camping</strong> – Perfect for nature lovers.</li>
+            </ul>
+            <h3>✅ Travel Tips for Solang Valley</h3>
+            <ul>
+                <li>Wear warm clothes in winter; temperatures drop below freezing.</li>
+                <li>Adventure activities depend on the season & weather conditions.</li>
+                <li>Book activities and cable car rides in advance during peak season.</li>
+                <li>Avoid visiting during monsoon (July–Sept) due to landslides.</li>
+                <li>Carry cash, as online payment options may not always work.</li>
+            </ul>
+            <div class="inquiry-form-container">
+                <h3>Book Your Adventure!</h3>
+                <form class="inquiry-form" action="https://formspree.io/f/mzzjgvdv" method="POST">
+                    <input type="hidden" name="destination" value="Solang Valley">
+                    <div class="form-group"><label for="name-solang">Full Name</label><input type="text" id="name-solang" name="name" required></div>
+                    <div class="form-group"><label for="email-solang">Email Address</label><input type="email" id="email-solang" name="email" required></div>
+                    <div class="form-group"><label for="phone-solang">Phone Number</label><input type="tel" id="phone-solang" name="phone"></div>
+                    <div class="form-group"><label for="travelers-solang">Number of Travelers</label><input type="number" id="travelers-solang" name="travelers" min="1" required></div>
+                    <div class="form-group full-width"><label for="date-solang">Preferred Start Date</label><input type="date" id="date-solang" name="date"></div>
+                    <div class="form-group full-width"><label for="message-solang">Your Message (optional)</label><textarea id="message-solang" name="message"></textarea></div>
+                    <div class="form-group full-width"><button type="submit">Send Inquiry</button></div>
+                </form>
+            </div>
+        </div>
+        <div id="rohtang-info" class="destination-info">
+            <h2>Rohtang Pass – Gateway to Lahaul & Spiti</h2>
+            <p>Rohtang Pass is one of the most famous and scenic mountain passes in India, located about 51 km from Manali in Himachal Pradesh. Situated at an altitude of 3,978 meters (13,050 ft) on the Pir Panjal Range, Rohtang Pass connects Kullu Valley with Lahaul and Spiti Valleys. Known for its snow-covered landscapes, thrilling adventures, and breathtaking Himalayan views, Rohtang is a must-visit destination for travelers heading to Manali.</p>
+            <h3>🌄 Why Visit Rohtang Pass?</h3>
+            <ul>
+                <li>Spectacular views of glaciers, peaks, and rivers.</li>
+                <li>Popular for snow activities like skiing, sledging, and snow biking.</li>
+                <li>Gateway to Lahaul, Spiti, and Leh–Ladakh.</li>
+                <li>Filming location for Bollywood movies like Jab We Met & Yeh Jawaani Hai Deewani.</li>
+                <li>A must-visit spot for adventure lovers and nature enthusiasts.</li>
+            </ul>
+            <h3>📍 Rohtang Pass Travel Details</h3>
+            <ul>
+                <li><strong>Location:</strong> 51 km from Manali, Himachal Pradesh</li>
+                <li><strong>Altitude:</strong> 3,978 m (13,050 ft)</li>
+                <li><strong>Best For:</strong> Adventure seekers, nature lovers, photographers, bikers</li>
+                <li><strong>Ideal Trip Duration:</strong> 1 day</li>
+            </ul>
+            <h3>⏰ Best Time to Visit Rohtang Pass</h3>
+            <ul>
+                <li><strong>May to June & September to October:</strong> Best time with pleasant weather and snow.</li>
+                <li><strong>July–August:</strong> Avoid due to monsoon and landslides.</li>
+                <li><strong>November to April:</strong> Closed due to heavy snowfall.</li>
+            </ul>
+            <h3>🚍 How to Reach Rohtang Pass</h3>
+            <ul>
+                <li><strong>From Manali:</strong> 2–3 hours drive by taxi, bike, or local bus.</li>
+                <li><strong>Nearest Airport:</strong> Bhuntar Airport (50 km from Manali).</li>
+                <li><strong>Nearest Railway Station:</strong> Joginder Nagar (~163 km) or Chandigarh (~310 km).</li>
+            </ul>
+            <h3>⚠️ Rohtang Permit:</h3>
+            <p>Tourists need a Rohtang Pass Permit (issued online by Himachal Tourism) to visit. Limited permits are available daily, so book in advance. Vehicles not carrying the permit are not allowed.</p>
+            <h3>🎯 Things to Do at Rohtang Pass</h3>
+            <ul>
+                <li><strong>Snow Adventure Sports:</strong> Skiing, snowboarding, snow scootering, and sledging.</li>
+                <li><strong>Photography:</strong> Panoramic views of mountains, glaciers, and valleys.</li>
+                <li><strong>Bike Trip:</strong> Popular among bikers traveling to Leh–Ladakh.</li>
+                <li><strong>Picnics & Camping:</strong> Enjoy the pristine Himalayan surroundings.</li>
+                <li><strong>Gateway Exploration:</strong> Continue towards Lahaul, Spiti, or Leh via Atal Tunnel.</li>
+            </ul>
+            <h3>✅ Travel Tips for Rohtang Pass</h3>
+            <ul>
+                <li>Carry warm clothes – temperatures drop below freezing.</li>
+                <li>Book permits online in advance (especially in peak season).</li>
+                <li>Hire local taxis if not driving your own vehicle.</li>
+                <li>Start early morning from Manali to avoid traffic jams.</li>
+                <li>Road conditions may be challenging – drive carefully.</li>
+            </ul>
+            <div class="inquiry-form-container">
+                <h3>Book Your Adventure!</h3>
+                <form class="inquiry-form" action="https://formspree.io/f/mzzjgvdv" method="POST">
+                    <input type="hidden" name="destination" value="Rohtang Pass">
+                    <div class="form-group"><label for="name-rohtang">Full Name</label><input type="text" id="name-rohtang" name="name" required></div>
+                    <div class="form-group"><label for="email-rohtang">Email Address</label><input type="email" id="email-rohtang" name="email" required></div>
+                    <div class="form-group"><label for="phone-rohtang">Phone Number</label><input type="tel" id="phone-rohtang" name="phone"></div>
+                    <div class="form-group"><label for="travelers-rohtang">Number of Travelers</label><input type="number" id="travelers-rohtang" name="travelers" min="1" required></div>
+                    <div class="form-group full-width"><label for="date-rohtang">Preferred Start Date</label><input type="date" id="date-rohtang" name="date"></div>
+                    <div class="form-group full-width"><label for="message-rohtang">Your Message (optional)</label><textarea id="message-rohtang" name="message"></textarea></div>
+                    <div class="form-group full-width"><button type="submit">Send Inquiry</button></div>
+                </form>
+            </div>
+        </div>
+        <div id="dharamshala-info" class="destination-info">
+            <h2>Dharamshala – The Little Lhasa of India</h2>
+            <p>Dharamshala is a beautiful hill station in Himachal Pradesh, located in the Kangra Valley at an altitude of 1,457 meters (4,780 ft). Surrounded by the Dhauladhar mountains, Dharamshala is best known as the home of the Dalai Lama and the Tibetan government-in-exile. Blending Tibetan culture with Himachali traditions, Dharamshala is a peaceful destination for nature lovers, trekkers, and spiritual seekers.</p>
+            <h3>🌄 Why Visit Dharamshala?</h3>
+            <ul>
+                <li>Official residence of the Dalai Lama and a hub for Tibetan Buddhism.</li>
+                <li>Stunning views of the Dhauladhar ranges and Kangra Valley.</li>
+                <li>Gateway to the Triund Trek and other Himalayan trails.</li>
+                <li>Famous for monasteries, temples, and Tibetan markets.</li>
+                <li>A perfect mix of spirituality, culture, and adventure.</li>
+            </ul>
+            <h3>📍 Dharamshala Travel Details</h3>
+            <ul>
+                <li><strong>Location:</strong> Kangra District, Himachal Pradesh</li>
+                <li><strong>Altitude:</strong> 1,457 m (4,780 ft)</li>
+                <li><strong>Ideal Trip Duration:</strong> 3–5 days</li>
+                <li><strong>Best For:</strong> Families, couples, trekkers, spiritual travelers</li>
+            </ul>
+            <h3>⏰ Best Time to Visit Dharamshala</h3>
+            <ul>
+                <li><strong>March to June:</strong> Pleasant weather, best for sightseeing and trekking.</li>
+                <li><strong>September to November:</strong> Clear skies, lush greenery, and festivals.</li>
+                <li><strong>December to February:</strong> Cold and snowy (especially in McLeod Ganj).</li>
+                <li><strong>❌ Avoid July–August due to monsoon rains.</strong></li>
+            </ul>
+            <h3>🚍 How to Reach Dharamshala</h3>
+            <ul>
+                <li><strong>By Air:</strong> Nearest airport – Gaggal (Kangra) ~13 km away.</li>
+                <li><strong>By Train:</strong> Pathankot (~90 km) is the nearest major railway station.</li>
+                <li><strong>By Road:</strong> Well-connected by buses and taxis from Delhi, Chandigarh, and Amritsar.</li>
+            </ul>
+            <h3>🏞️ Top Attractions in Dharamshala</h3>
+            <ul>
+                <li><strong>McLeod Ganj</strong> – Mini Tibet of India, Tibetan monasteries, cafes.</li>
+                <li><strong>Namgyal Monastery</strong> – Dalai Lama’s monastery.</li>
+                <li><strong>Bhagsu Waterfall & Bhagsunag Temple</strong> – Scenic waterfall near McLeod Ganj.</li>
+                <li><strong>Triund Trek</strong> – Most popular short trek in Himachal.</li>
+                <li><strong>St. John in the Wilderness Church</strong> – Historic stone church in the forest.</li>
+                <li><strong>Kangra Fort</strong> – Ancient fort with panoramic views.</li>
+                <li><strong>Dharamkot</strong> – A peaceful village with yoga, meditation, and trekking vibes.</li>
+            </ul>
+            <h3>🏕️ Things to Do in Dharamshala</h3>
+            <ul>
+                <li>Trek to Triund, Kareri Lake, and Indrahar Pass.</li>
+                <li>Explore Tibetan culture, food, and handicrafts.</li>
+                <li>Attend yoga, meditation, and spiritual retreats.</li>
+                <li>Visit monasteries for peace and cultural learning.</li>
+                <li>Café hopping in McLeod Ganj.</li>
+            </ul>
+            <h3>✅ Travel Tips for Dharamshala</h3>
+            <ul>
+                <li>Carry warm clothes year-round – evenings can be cold.</li>
+                <li>Stay in McLeod Ganj if you want a more vibrant, touristy vibe.</li>
+                <li>Respect Tibetan culture and traditions.</li>
+                <li>Book stays in advance during peak season (March–June & Oct–Nov).</li>
+                <li>Trekking shoes recommended if you plan to hike.</li>
+            </ul>
+            <div class="inquiry-form-container">
+                <h3>Book Your Adventure!</h3>
+                <form class="inquiry-form" action="https://formspree.io/f/mzzjgvdv" method="POST">
+                    <input type="hidden" name="destination" value="Dharamshala">
+                    <div class="form-group"><label for="name-dharamshala">Full Name</label><input type="text" id="name-dharamshala" name="name" required></div>
+                    <div class="form-group"><label for="email-dharamshala">Email Address</label><input type="email" id="email-dharamshala" name="email" required></div>
+                    <div class="form-group"><label for="phone-dharamshala">Phone Number</label><input type="tel" id="phone-dharamshala" name="phone"></div>
+                    <div class="form-group"><label for="travelers-dharamshala">Number of Travelers</label><input type="number" id="travelers-dharamshala" name="travelers" min="1" required></div>
+                    <div class="form-group full-width"><label for="date-dharamshala">Preferred Start Date</label><input type="date" id="date-dharamshala" name="date"></div>
+                    <div class="form-group full-width"><label for="message-dharamshala">Your Message (optional)</label><textarea id="message-dharamshala" name="message"></textarea></div>
+                    <div class="form-group full-width"><button type="submit">Send Inquiry</button></div>
+                </form>
+            </div>
+        </div>
+        <div id="mcleodganj-info" class="destination-info">
+            <h2>McLeod Ganj – Mini Tibet of India</h2>
+            <p>McLeod Ganj, often called the “Little Lhasa of India”, is a beautiful hill station located just above Dharamshala in Himachal Pradesh. Situated at an altitude of 2,082 meters (6,831 ft), McLeod Ganj is the residence of the 14th Dalai Lama and a hub of Tibetan culture, monasteries, cafes, and trekking trails. It is one of the most popular tourist destinations in Himachal for spiritual seekers, trekkers, backpackers, and culture lovers.</p>
+            <h3>🌄 Why Visit McLeod Ganj?</h3>
+            <ul>
+                <li>Experience Tibetan Buddhism and culture.</li>
+                <li>Visit the Dalai Lama’s residence and monasteries.</li>
+                <li>Trekking hub for Triund, Kareri Lake, and Indrahar Pass.</li>
+                <li>Bustling cafes, handicraft markets, and yoga centers.</li>
+                <li>Blend of spirituality, adventure, and international backpacker vibes.</li>
+            </ul>
+            <h3>📍 McLeod Ganj Travel Details</h3>
+            <ul>
+                <li><strong>Location:</strong> Kangra District, Himachal Pradesh (5 km above Dharamshala)</li>
+                <li><strong>Altitude:</strong> 2,082 m (6,831 ft)</li>
+                <li><strong>Ideal Trip Duration:</strong> 3–4 days</li>
+                <li><strong>Best For:</strong> Backpackers, spiritual seekers, trekkers, couples</li>
+            </ul>
+            <h3>⏰ Best Time to Visit McLeod Ganj</h3>
+            <ul>
+                <li><strong>March to June:</strong> Best for sightseeing, trekking, and adventure.</li>
+                <li><strong>September to November:</strong> Pleasant weather and clear skies.</li>
+                <li><strong>December to February:</strong> Snowfall season, ideal for winter lovers.</li>
+                <li><strong>❌ Avoid July–August (heavy rains and slippery trails).</strong></li>
+            </ul>
+            <h3>🚍 How to Reach McLeod Ganj</h3>
+            <ul>
+                <li><strong>By Air:</strong> Gaggal Airport (Kangra) – 18 km away.</li>
+                <li><strong>By Train:</strong> Pathankot (90 km) is the nearest railway station.</li>
+                <li><strong>By Road:</strong> Buses and taxis available from Delhi, Chandigarh, Amritsar, and Dharamshala.</li>
+            </ul>
+            <h3>🏞️ Top Attractions in McLeod Ganj</h3>
+            <ul>
+                <li><strong>Namgyal Monastery (Dalai Lama’s Temple Complex)</strong> – Spiritual center of Tibetan Buddhism.</li>
+                <li><strong>Bhagsu Waterfall & Bhagsunag Temple</strong> – A must-visit scenic spot.</li>
+                <li><strong>Triund Trek</strong> – Famous 9 km trek with stunning mountain views.</li>
+                <li><strong>St. John in the Wilderness Church</strong> – Historic church surrounded by deodar forest.</li>
+                <li><strong>Tibetan Museum</strong> – Showcasing Tibetan culture and history.</li>
+                <li><strong>Dal Lake</strong> – Small scenic lake surrounded by deodar trees.</li>
+                <li><strong>Dharamkot</strong> – Peaceful village near McLeod Ganj, perfect for yoga and meditation.</li>
+            </ul>
+            <h3>🏕️ Things to Do in McLeod Ganj</h3>
+            <ul>
+                <li>Trek to Triund and Kareri Lake.</li>
+                <li>Attend meditation, yoga, and spiritual retreats.</li>
+                <li>Shop for Tibetan handicrafts, thangkas, woolens, and souvenirs.</li>
+                <li>Try local and international cuisines in popular cafes like Illiterati, Tibet Kitchen, and Jimmy’s Italian Kitchen.</li>
+                <li>Visit monasteries for peace and cultural experiences.</li>
+            </ul>
+            <h3>✅ Travel Tips for McLeod Ganj</h3>
+            <ul>
+                <li>Carry warm clothes – even summer nights can be cool.</li>
+                <li>Book stays early during tourist season (March–June & Sept–Nov).</li>
+                <li>Stay in Dharamkot or Bhagsu if you want quieter alternatives to the main town.</li>
+                <li>Wear trekking shoes if planning to hike.</li>
+                <li>Respect Tibetan culture and local traditions.</li>
+            </ul>
+            <div class="inquiry-form-container">
+                <h3>Book Your Adventure!</h3>
+                <form class="inquiry-form" action="https://formspree.io/f/mzzjgvdv" method="POST">
+                    <input type="hidden" name="destination" value="McLeod Ganj">
+                    <div class="form-group"><label for="name-mcleodganj">Full Name</label><input type="text" id="name-mcleodganj" name="name" required></div>
+                    <div class="form-group"><label for="email-mcleodganj">Email Address</label><input type="email" id="email-mcleodganj" name="email" required></div>
+                    <div class="form-group"><label for="phone-mcleodganj">Phone Number</label><input type="tel" id="phone-mcleodganj" name="phone"></div>
+                    <div class="form-group"><label for="travelers-mcleodganj">Number of Travelers</label><input type="number" id="travelers-mcleodganj" name="travelers" min="1" required></div>
+                    <div class="form-group full-width"><label for="date-mcleodganj">Preferred Start Date</label><input type="date" id="date-mcleodganj" name="date"></div>
+                    <div class="form-group full-width"><label for="message-mcleodganj">Your Message (optional)</label><textarea id="message-mcleodganj" name="message"></textarea></div>
+                    <div class="form-group full-width"><button type="submit">Send Inquiry</button></div>
+                </form>
+            </div>
+        </div>
+        <div id="vaishno-info" class="destination-info">
+            <h2>Vaishno Devi – The Holy Cave Shrine of Mata Rani</h2>
+            <p>Vaishno Devi Temple, located near Katra in Jammu & Kashmir, is one of the most sacred pilgrimage destinations in India. The temple is dedicated to Mata Vaishno Devi, believed to be an incarnation of Goddess Durga. Every year, millions of devotees undertake the 13 km trek from Katra to the holy cave situated at an altitude of 5,200 ft (1,585 m) in the Trikuta Mountains. It is believed that “Mata calls her devotees” – and only those chosen by her get the blessing to visit.</p>
+            <h3>🌄 Why Visit Vaishno Devi?</h3>
+            <ul>
+                <li>One of the holiest Shakti Peeths of India.</li>
+                <li>Spiritual journey through the Trikuta Hills.</li>
+                <li>Darshan of the three Pindis (natural rock formations) representing the goddess.</li>
+                <li>Well-organized yatra facilities including shelters, food stalls, and medical aid.</li>
+                <li>A soul-stirring combination of faith, devotion, and natural beauty.</li>
+            </ul>
+            <h3>📍 Vaishno Devi Travel Details</h3>
+            <ul>
+                <li><strong>Location:</strong> Trikuta Hills, near Katra, Jammu & Kashmir</li>
+                <li><strong>Altitude:</strong> 5,200 ft (1,585 m)</li>
+                <li><strong>Trek Distance:</strong> 13 km from Katra to Bhawan</li>
+                <li><strong>Ideal Trip Duration:</strong> 2–3 days</li>
+                <li><strong>Best For:</strong> Pilgrims, families, spiritual seekers</li>
+            </ul>
+            <h3>⏰ Best Time to Visit Vaishno Devi</h3>
+            <ul>
+                <li><strong>March to June:</strong> Pleasant weather, peak pilgrimage season.</li>
+                <li><strong>September to November:</strong> Best season for comfortable darshan.</li>
+                <li><strong>December to February:</strong> Snowfall season – beautiful but very cold.</li>
+                <li><strong>❌ July–August:</strong> Heavy rains may cause landslides, so not ideal.</li>
+            </ul>
+            <h3>🚍 How to Reach Vaishno Devi</h3>
+            <ul>
+                <li><strong>By Air:</strong> Nearest airport – Jammu (50 km from Katra).</li>
+                <li><strong>By Train:</strong> Katra Railway Station (well connected to Delhi & major cities).</li>
+                <li><strong>By Road:</strong> Regular buses and taxis from Jammu, Delhi, Chandigarh.</li>
+            </ul>
+            <h3>🛕 The Vaishno Devi Yatra (Trek Details)</h3>
+            <ul>
+                <li><strong>Starting Point:</strong> Banganga, Katra.</li>
+                <li><strong>Trek Distance:</strong> 13 km (takes 5–7 hours on foot).</li>
+                <li><strong>Options for Devotees:</strong>
+                    <ul>
+                        <li>On Foot: Traditional way of completing the yatra.</li>
+                        <li>Ponies/Palkis: Available for elderly and those unable to walk.</li>
+                        <li>Battery Cars: Available from Adhkuwari to Bhawan.</li>
+                        <li>Helicopter Service: From Katra to Sanjichhat (2.5 km short trek to Bhawan).</li>
+                    </ul>
+                </li>
+            </ul>
+            <h3>🏞️ Major Stops on the Yatra</h3>
+            <ul>
+                <li><strong>Banganga:</strong> Starting point of the trek.</li>
+                <li><strong>Charan Paduka:</strong> Marks the footprints of Mata Vaishno Devi.</li>
+                <li><strong>Adhkuwari:</strong> Famous for the holy cave where Mata meditated for years.</li>
+                <li><strong>Sanjichhat:</strong> Offers panoramic views of the valley.</li>
+                <li><strong>Bhawan:</strong> Main shrine housing the holy Pindis of Mata.</li>
+                <li><strong>Bhairon Temple:</strong> Devotees must visit after darshan at Bhawan to complete the pilgrimage.</li>
+            </ul>
+            <h3>✅ Travel Tips for Vaishno Devi</h3>
+            <ul>
+                <li>Book Yatra Registration Slip and helicopter tickets online in advance.</li>
+                <li>Wear comfortable shoes – the trek can be tiring.</li>
+                <li>Carry warm clothes (even in summer nights it can get cold).</li>
+                <li>Avoid carrying too much luggage; lockers are available at Bhawan.</li>
+                <li>Start trek early morning or late evening to avoid rush.</li>
+            </ul>
+            <div class="inquiry-form-container">
+                <h3>Book Your Adventure!</h3>
+                <form class="inquiry-form" action="https://formspree.io/f/mzzjgvdv" method="POST">
+                    <input type="hidden" name="destination" value="Vaishno Devi">
+                    <div class="form-group"><label for="name-vaishno">Full Name</label><input type="text" id="name-vaishno" name="name" required></div>
+                    <div class="form-group"><label for="email-vaishno">Email Address</label><input type="email" id="email-vaishno" name="email" required></div>
+                    <div class="form-group"><label for="phone-vaishno">Phone Number</label><input type="tel" id="phone-vaishno" name="phone"></div>
+                    <div class="form-group"><label for="travelers-vaishno">Number of Travelers</label><input type="number" id="travelers-vaishno" name="travelers" min="1" required></div>
+                    <div class="form-group full-width"><label for="date-vaishno">Preferred Start Date</label><input type="date" id="date-vaishno" name="date"></div>
+                    <div class="form-group full-width"><label for="message-vaishno">Your Message (optional)</label><textarea id="message-vaishno" name="message"></textarea></div>
+                    <div class="form-group full-width"><button type="submit">Send Inquiry</button></div>
+                </form>
+            </div>
+        </div>
+        <div id="tungnath-info" class="destination-info">
+            <h2>Tungnath – The Highest Shiva Temple in the World</h2>
+            <p>Tungnath Temple, located in the Rudraprayag district of Uttarakhand, is the highest Shiva temple in the world, standing tall at an altitude of 3,680 m (12,073 ft) in the Garhwal Himalayas. It is one of the Panch Kedar temples and is believed to be more than 1,000 years old. The trek to Tungnath is short but steep, filled with lush meadows, rhododendron forests, and majestic Himalayan peaks like Chaukhamba, Neelkanth, and Kedarnath in the backdrop.</p>
+            <h3>🌄 Why Visit Tungnath?</h3>
+            <ul>
+                <li>World’s highest Shiva temple and part of the sacred Panch Kedar circuit.</li>
+                <li>Beautiful trek through alpine meadows and forests.</li>
+                <li>Majestic views of snow-clad Himalayan peaks.</li>
+                <li>Starting point for the trek to Chandrashila Peak (4,000 m).</li>
+                <li>A blend of spiritual devotion and natural beauty.</li>
+            </ul>
+            <h3>📍 Tungnath Travel Details</h3>
+            <ul>
+                <li><strong>Location:</strong> Rudraprayag, Uttarakhand</li>
+                <li><strong>Altitude:</strong> 3,680 m (12,073 ft)</li>
+                <li><strong>Trek Distance:</strong> 3.5–4 km from Chopta</li>
+                <li><strong>Trek Time:</strong> 2–3 hours (easy to moderate)</li>
+                <li><strong>Ideal Trip Duration:</strong> 2–3 days (including Chopta & Chandrashila)</li>
+                <li><strong>Best For:</strong> Pilgrims, trekkers, nature lovers</li>
+            </ul>
+            <h3>⏰ Best Time to Visit Tungnath</h3>
+            <ul>
+                <li><strong>April to June:</strong> Pleasant weather, rhododendrons in full bloom.</li>
+                <li><strong>September to November:</strong> Clear skies, best views of the Himalayas.</li>
+                <li><strong>December to March:</strong> Temple closes due to heavy snow, but trek lovers visit for winter trekking (snow trek to Chopta–Tungnath–Chandrashila).</li>
+            </ul>
+            <h3>🚍 How to Reach Tungnath</h3>
+            <ul>
+                <li><strong>By Air:</strong> Nearest airport – Jolly Grant Airport, Dehradun (220 km from Chopta).</li>
+                <li><strong>By Train:</strong> Nearest railway station – Haridwar (225 km).</li>
+                <li><strong>By Road:</strong> Regular buses/taxis from Rishikesh, Haridwar, Dehradun to Chopta.</li>
+                <li><strong>Trek Start Point:</strong> Chopta, also called the "Mini Switzerland of India".</li>
+            </ul>
+            <h3>🏔️ The Tungnath Trek</h3>
+            <ul>
+                <li><strong>Starting Point:</strong> Chopta (2,680 m).</li>
+                <li><strong>Trek Distance:</strong> 3.5–4 km (well-paved stone trail).</li>
+                <li><strong>Trek Duration:</strong> 2–3 hours (easy for beginners).</li>
+                <li><strong>Route Highlights:</strong> Meadows, oak forests, panoramic Himalayan views.</li>
+                <li><strong>Extension Trek:</strong> 1.5 km further to Chandrashila Peak (best sunrise views).</li>
+            </ul>
+            <h3>🛕 About Tungnath Temple</h3>
+            <ul>
+                <li>Part of the Panch Kedar temples (Kedarnath, Tungnath, Rudranath, Madhyamaheshwar, Kalpeshwar).</li>
+                <li>Believed to have been built by the Pandavas after the Kurukshetra war.</li>
+                <li>Dedicated to Lord Shiva, worshipped here as his arms are believed to have appeared at this site.</li>
+                <li>Temple closes in winter (November to April); idol is shifted to Mukkumath village for worship.</li>
+            </ul>
+            <h3>✅ Travel Tips for Tungnath</h3>
+            <ul>
+                <li>Carry light woolens in summer; heavy woolens in winter.</li>
+                <li>Start trek early morning for best views and less rush.</li>
+                <li>If planning Chandrashila, keep a flashlight & water bottle.</li>
+                <li>Accommodation available at Chopta (basic lodges, camps, homestays).</li>
+                <li>Trek is short but steep – pace yourself.</li>
+            </ul>
+             <div class="inquiry-form-container">
+                <h3>Book Your Adventure!</h3>
+                <form class="inquiry-form" action="https://formspree.io/f/mzzjgvdv" method="POST">
+                    <input type="hidden" name="destination" value="Tungnath">
+                    <div class="form-group"><label for="name-tungnath">Full Name</label><input type="text" id="name-tungnath" name="name" required></div>
+                    <div class="form-group"><label for="email-tungnath">Email Address</label><input type="email" id="email-tungnath" name="email" required></div>
+                    <div class="form-group"><label for="phone-tungnath">Phone Number</label><input type="tel" id="phone-tungnath" name="phone"></div>
+                    <div class="form-group"><label for="travelers-tungnath">Number of Travelers</label><input type="number" id="travelers-tungnath" name="travelers" min="1" required></div>
+                    <div class="form-group full-width"><label for="date-tungnath">Preferred Start Date</label><input type="date" id="date-tungnath" name="date"></div>
+                    <div class="form-group full-width"><label for="message-tungnath">Your Message (optional)</label><textarea id="message-tungnath" name="message"></textarea></div>
+                    <div class="form-group full-width"><button type="submit">Send Inquiry</button></div>
+                </form>
+            </div>
+        </div>
+        <div id="chopta-info" class="destination-info">
+            <h2>Chopta Valley – Mini Switzerland of India</h2>
+            <p>Chopta Valley, located in the Rudraprayag district of Uttarakhand, is a stunning Himalayan destination famous for its lush green meadows, dense forests, and snow-capped peaks. Often called “Mini Switzerland of India”, Chopta is the base for trekking to Tungnath Temple and Chandrashila Peak, making it a perfect destination for nature lovers, adventure seekers, and spiritual travelers.</p>
+            <h3>🌄 Why Visit Chopta Valley?</h3>
+            <ul>
+                <li>Spectacular panoramic views of Himalayan peaks like Nanda Devi, Chaukhamba, and Trishul.</li>
+                <li>Ideal starting point for Tungnath and Chandrashila treks.</li>
+                <li>Peaceful alpine meadows perfect for camping, photography, and nature walks.</li>
+                <li>Rich flora and fauna – home to Himalayan birds, musk deer, and rhododendrons.</li>
+                <li>Snowfall in winters transforms Chopta into a snow paradise.</li>
+            </ul>
+            <h3>📍 Chopta Valley Travel Details</h3>
+            <ul>
+                <li><strong>Location:</strong> Rudraprayag, Uttarakhand</li>
+                <li><strong>Altitude:</strong> 2,680 m (8,790 ft)</li>
+                <li><strong>Ideal Trip Duration:</strong> 2–3 days</li>
+                <li><strong>Best For:</strong> Trekkers, campers, nature lovers, photographers</li>
+            </ul>
+            <h3>⏰ Best Time to Visit Chopta</h3>
+            <ul>
+                <li><strong>April to June:</strong> Pleasant weather, greenery, rhododendron bloom.</li>
+                <li><strong>September to November:</strong> Clear skies, best for trekking and photography.</li>
+                <li><strong>December to February:</strong> Heavy snowfall – ideal for snow lovers and winter trekkers.</li>
+                <li><strong>❌ Avoid July–August (monsoon) due to slippery trails and landslides.</strong></li>
+            </ul>
+            <h3>🚍 How to Reach Chopta</h3>
+            <ul>
+                <li><strong>By Air:</strong> Nearest airport – Jolly Grant Airport, Dehradun (~220 km).</li>
+                <li><strong>By Train:</strong> Nearest railway station – Haridwar (~225 km).</li>
+                <li><strong>By Road:</strong> Well-connected via taxis, buses, and private vehicles from Rishikesh, Haridwar, and Dehradun.</li>
+                <li><strong>Trek Starting Point:</strong> Chopta itself serves as the base for Tungnath and Chandrashila treks.</li>
+            </ul>
+            <h3>🏔️ Things to Do in Chopta Valley</h3>
+            <ul>
+                <li><strong>Trek to Tungnath Temple</strong> – 3.5–4 km uphill trek.</li>
+                <li><strong>Chandrashila Peak Trek</strong> – Short extension for sunrise views over Himalayas.</li>
+                <li><strong>Camping & Stargazing</strong> – Alpine meadows perfect for tents and bonfires.</li>
+                <li><strong>Bird Watching & Nature Walks</strong> – Spot Himalayan monals, koklas, and other species.</li>
+                <li><strong>Photography</strong> – Meadows, snow peaks, rivers, and rhododendron blooms.</li>
+            </ul>
+            <h3>✅ Travel Tips for Chopta</h3>
+            <ul>
+                <li>Stay in basic lodges, tents, or homestays – book in advance during peak season.</li>
+                <li>Carry woolens even in summer; winters are very cold.</li>
+                <li>Start treks early morning for clear views and fewer crowds.</li>
+                <li>Carry water, snacks, trekking shoes, and a flashlight if trekking Chandrashila.</li>
+                <li>Respect nature – do not litter and follow eco-friendly practices.</li>
+            </ul>
+             <div class="inquiry-form-container">
+                <h3>Book Your Adventure!</h3>
+                <form class="inquiry-form" action="https://formspree.io/f/mzzjgvdv" method="POST">
+                    <input type="hidden" name="destination" value="Chopta Valley">
+                    <div class="form-group"><label for="name-chopta">Full Name</label><input type="text" id="name-chopta" name="name" required></div>
+                    <div class="form-group"><label for="email-chopta">Email Address</label><input type="email" id="email-chopta" name="email" required></div>
+                    <div class="form-group"><label for="phone-chopta">Phone Number</label><input type="tel" id="phone-chopta" name="phone"></div>
+                    <div class="form-group"><label for="travelers-chopta">Number of Travelers</label><input type="number" id="travelers-chopta" name="travelers" min="1" required></div>
+                    <div class="form-group full-width"><label for="date-chopta">Preferred Start Date</label><input type="date" id="date-chopta" name="date"></div>
+                    <div class="form-group full-width"><label for="message-chopta">Your Message (optional)</label><textarea id="message-chopta" name="message"></textarea></div>
+                    <div class="form-group full-width"><button type="submit">Send Inquiry</button></div>
+                </form>
+            </div>
+        </div>
+        <div id="kedarnath-info" class="destination-info">
+            <h2>Kedarnath – Sacred Abode of Lord Shiva</h2>
+            <p>Kedarnath Temple, located in the Rudraprayag district of Uttarakhand, is one of the most revered Hindu pilgrimage sites and part of the Char Dham Yatra. Situated at an altitude of 3,583 meters (11,755 ft) in the Garhwal Himalayas, the temple is dedicated to Lord Shiva and is believed to have been constructed by the Pandavas. The serene surroundings of snow-capped peaks, Mandakini River, and Himalayan meadows make Kedarnath a spiritual and scenic wonder.</p>
+            <h3>🌄 Why Visit Kedarnath?</h3>
+            <ul>
+                <li>One of the 12 Jyotirlingas of Lord Shiva.</li>
+                <li>Integral part of the Char Dham Yatra along with Badrinath, Yamunotri, and Gangotri.</li>
+                <li>Surrounded by majestic Himalayan peaks and glaciers.</li>
+                <li>Mandakini River adds to the spiritual and scenic experience.</li>
+                <li>Spiritual journey and adventure trekking rolled into one.</li>
+            </ul>
+            <h3>📍 Kedarnath Travel Details</h3>
+            <ul>
+                <li><strong>Location:</strong> Rudraprayag, Uttarakhand</li>
+                <li><strong>Altitude:</strong> 3,583 m (11,755 ft)</li>
+                <li><strong>Trek Distance:</strong> 16 km from Gaurikund to Kedarnath temple</li>
+                <li><strong>Ideal Trip Duration:</strong> 2–3 days</li>
+                <li><strong>Best For:</strong> Pilgrims, trekkers, spiritual seekers</li>
+            </ul>
+            <h3>⏰ Best Time to Visit Kedarnath</h3>
+            <ul>
+                <li><strong>May to June:</strong> Opening of the temple, pleasant weather, snow at higher altitudes.</li>
+                <li><strong>September to October:</strong> Clear skies and post-monsoon greenery.</li>
+                <li><strong>November to April:</strong> Temple remains closed due to heavy snowfall.</li>
+                <li><strong>❌ Avoid July–August (monsoon) due to landslides and slippery paths.</strong></li>
+            </ul>
+            <h3>🚍 How to Reach Kedarnath</h3>
+            <ul>
+                <li><strong>By Air:</strong> Nearest airport – Jolly Grant Airport, Dehradun (~230 km).</li>
+                <li><strong>By Train:</strong> Nearest railway station – Rishikesh (~220 km).</li>
+                <li><strong>By Road:</strong> Buses and taxis available from Rishikesh, Haridwar, and Dehradun to Gaurikund, the base of the Kedarnath trek.</li>
+                <li><strong>Trek:</strong> 16 km from Gaurikund to Kedarnath Temple, uphill through scenic Himalayan trails.</li>
+            </ul>
+            <h3>🏞️ Kedarnath Trek & Yatra</h3>
+            <ul>
+                <li><strong>Starting Point:</strong> Gaurikund (~1,950 m).</li>
+                <li><strong>Trek Distance:</strong> 16 km (takes 6–8 hours on foot).</li>
+                <li><strong>Options:</strong>
+                    <ul>
+                        <li>On Foot: Traditional and most popular.</li>
+                        <li>Pony/Palki Service: Available for elderly or physically challenged.</li>
+                        <li>Helicopter Service: From Phata or Guptkashi to Kedarnath (short 15-minute ride).</li>
+                    </ul>
+                </li>
+                <li><strong>Route Highlights:</strong> Pine forests, alpine meadows, river crossings, panoramic Himalayan views.</li>
+            </ul>
+            <h3>🛕 About Kedarnath Temple</h3>
+            <ul>
+                <li>Constructed by the Pandavas and later renovated by Adi Shankaracharya.</li>
+                <li>Dedicated to Lord Shiva; one of the 12 Jyotirlingas.</li>
+                <li>Temple is open only from May to November due to extreme weather conditions.</li>
+                <li>Survived the 2013 Uttarakhand floods with minimal damage, considered miraculous by devotees.</li>
+            </ul>
+            <h3>✅ Travel Tips for Kedarnath</h3>
+            <ul>
+                <li>Start trek early morning for safer journey and clear views.</li>
+                <li>Carry water, light snacks, trekking shoes, and warm clothing.</li>
+                <li>Book helicopter tickets in advance if not trekking.</li>
+                <li>Respect the sanctity of the temple and local environment.</li>
+                <li>Avoid traveling during monsoon and heavy snowfall.</li>
+            </ul>
+             <div class="inquiry-form-container">
+                <h3>Book Your Adventure!</h3>
+                <form class="inquiry-form" action="https://formspree.io/f/mzzjgvdv" method="POST">
+                    <input type="hidden" name="destination" value="Kedarnath">
+                    <div class="form-group"><label for="name-kedarnath">Full Name</label><input type="text" id="name-kedarnath" name="name" required></div>
+                    <div class="form-group"><label for="email-kedarnath">Email Address</label><input type="email" id="email-kedarnath" name="email" required></div>
+                    <div class="form-group"><label for="phone-kedarnath">Phone Number</label><input type="tel" id="phone-kedarnath" name="phone"></div>
+                    <div class="form-group"><label for="travelers-kedarnath">Number of Travelers</label><input type="number" id="travelers-kedarnath" name="travelers" min="1" required></div>
+                    <div class="form-group full-width"><label for="date-kedarnath">Preferred Start Date</label><input type="date" id="date-kedarnath" name="date"></div>
+                    <div class="form-group full-width"><label for="message-kedarnath">Your Message (optional)</label><textarea id="message-kedarnath" name="message"></textarea></div>
+                    <div class="form-group full-width"><button type="submit">Send Inquiry</button></div>
+                </form>
+            </div>
+        </div>
+        <div id="badrinath-info" class="destination-info">
+            <h2>Badrinath – The Sacred Abode of Lord Vishnu</h2>
+            <p>Badrinath Temple, located in the Chamoli district of Uttarakhand, is one of the most revered pilgrimage sites in India. Situated at an altitude of 3,133 meters (10,279 ft) in the Garhwal Himalayas, it is dedicated to Lord Vishnu and is a key destination of the Char Dham Yatra along with Kedarnath, Gangotri, and Yamunotri. Badrinath is not only a spiritual center but also surrounded by snow-capped peaks, rivers, and lush valleys, making it a perfect destination for pilgrims and nature lovers alike.</p>
+            <h3>🌄 Why Visit Badrinath?</h3>
+            <ul>
+                <li>One of the Char Dham pilgrimage sites and Divya Desams (108 sacred Vishnu temples).</li>
+                <li>Situated on the banks of the Alaknanda River with stunning Himalayan views.</li>
+                <li>Gateway to Neelkanth Peak, Mana Village, and Tapt Kund (hot spring).</li>
+                <li>Spiritual journey combined with natural beauty and trekking opportunities.</li>
+                <li>Historical and mythological significance mentioned in Padma Purana and Skanda Purana.</li>
+            </ul>
+            <h3>📍 Badrinath Travel Details</h3>
+            <ul>
+                <li><strong>Location:</strong> Chamoli District, Uttarakhand</li>
+                <li><strong>Altitude:</strong> 3,133 m (10,279 ft)</li>
+                <li><strong>Ideal Trip Duration:</strong> 2–3 days</li>
+                <li><strong>Best For:</strong> Pilgrims, spiritual seekers, trekkers, nature enthusiasts</li>
+            </ul>
+            <h3>⏰ Best Time to Visit Badrinath</h3>
+            <ul>
+                <li><strong>May to June:</strong> Temple opens, ideal weather for yatra and sightseeing.</li>
+                <li><strong>September to October:</strong> Clear skies, post-monsoon, best for photography and trekking.</li>
+                <li><strong>November to April:</strong> Temple closes due to heavy snowfall.</li>
+                <li><strong>❌ Avoid July–August during heavy monsoon rains; landslides are common.</strong></li>
+            </ul>
+            <h3>🚍 How to Reach Badrinath</h3>
+            <ul>
+                <li><strong>By Air:</strong> Nearest airport – Jolly Grant Airport, Dehradun (~317 km).</li>
+                <li><strong>By Train:</strong> Nearest railway station – Rishikesh (~297 km).</li>
+                <li><strong>By Road:</strong> Well-connected by buses, taxis, and shared cabs from Rishikesh, Haridwar, Joshimath, and Dehradun.</li>
+                <li><strong>Final Stretch:</strong> Badrinath town is reachable by road; no trek needed unlike Kedarnath.</li>
+            </ul>
+            <h3>🛕 About Badrinath Temple</h3>
+            <ul>
+                <li>Dedicated to Lord Vishnu, also called Badrinarayan.</li>
+                <li>Famous for Tapt Kund (hot water spring) where devotees take a ritual bath before darshan.</li>
+                <li>Temple originally built by Adi Shankaracharya in the 9th century.</li>
+                <li>Surrounded by Neelkanth Peak (6,597 m) and Nar and Narayan mountain ranges.</li>
+                <li>Temple remains open only from May to November due to harsh winter conditions.</li>
+            </ul>
+            <h3>🏞️ Nearby Attractions in Badrinath</h3>
+            <ul>
+                <li><strong>Mana Village:</strong> Last Indian village before the Indo-Tibet border, rich in culture and mythology.</li>
+                <li><strong>Vasudhara Falls:</strong> 5 km trek from Mana Village, beautiful waterfall surrounded by mountains.</li>
+                <li><strong>Charanpaduka:</strong> Sacred spot where Badrinarayan is believed to have walked.</li>
+                <li><strong>Neelkanth Peak:</strong> Stunning Himalayan peak visible from the temple town.</li>
+                <li><strong>Tapt Kund:</strong> Hot springs believed to have medicinal properties.</li>
+            </ul>
+            <h3>✅ Travel Tips for Badrinath</h3>
+            <ul>
+                <li>Carry warm clothes even in summer; temperatures can drop at night.</li>
+                <li>Start journey early to avoid rush and enjoy sightseeing along the Alaknanda River.</li>
+                <li>Respect local customs and temple rules; photography is restricted inside the temple.</li>
+                <li>Stay in Joshimath or Badrinath town; book in advance during peak season.</li>
+                <li>Drink plenty of water and acclimatize due to high altitude.</li>
+            </ul>
+            <div class="inquiry-form-container">
+                <h3>Book Your Adventure!</h3>
+                <form class="inquiry-form" action="https://formspree.io/f/mzzjgvdv" method="POST">
+                    <input type="hidden" name="destination" value="Badrinath">
+                    <div class="form-group"><label for="name-badrinath">Full Name</label><input type="text" id="name-badrinath" name="name" required></div>
+                    <div class="form-group"><label for="email-badrinath">Email Address</label><input type="email" id="email-badrinath" name="email" required></div>
+                    <div class="form-group"><label for="phone-badrinath">Phone Number</label><input type="tel" id="phone-badrinath" name="phone"></div>
+                    <div class="form-group"><label for="travelers-badrinath">Number of Travelers</label><input type="number" id="travelers-badrinath" name="travelers" min="1" required></div>
+                    <div class="form-group full-width"><label for="date-badrinath">Preferred Start Date</label><input type="date" id="date-badrinath" name="date"></div>
+                    <div class="form-group full-width"><label for="message-badrinath">Your Message (optional)</label><textarea id="message-badrinath" name="message"></textarea></div>
+                    <div class="form-group full-width"><button type="submit">Send Inquiry</button></div>
+                </form>
+            </div>
+        </div>
+        <div id="madmaheshwar-info" class="destination-info">
+            <h2>Madhyamaheshwar – The Hidden Himalayan Shiva Temple</h2>
+            <p>Madhyamaheshwar Temple is one of the Panch Kedar Temples in Uttarakhand, dedicated to Lord Shiva. Located in the Uttarkashi district at an altitude of 3,490 meters (11,450 ft), this ancient temple is surrounded by snow-capped peaks, lush green meadows, and dense forests, making it a spiritual and scenic treasure in the Garhwal Himalayas. It is believed that the Panch Kedar temples were built by the Pandavas to seek Lord Shiva’s blessings, and Madhyamaheshwar represents Shiva’s navel (central part).</p>
+            <h3>🌄 Why Visit Madhyamaheshwar?</h3>
+            <ul>
+                <li>One of the lesser-known yet spiritually powerful Panch Kedar temples.</li>
+                <li>Situated in a remote, pristine Himalayan valley, offering serenity and peace.</li>
+                <li>Surrounded by majestic peaks, alpine meadows, and rivers, perfect for trekking and photography.</li>
+                <li>Ideal for pilgrims seeking solitude and spirituality away from crowded temples.</li>
+                <li>Gateway to natural treks and Himalayan adventure trails.</li>
+            </ul>
+            <h3>📍 Madhyamaheshwar Travel Details</h3>
+            <ul>
+                <li><strong>Location:</strong> Uttarkashi District, Uttarakhand</li>
+                <li><strong>Altitude:</strong> 3,490 m (11,450 ft)</li>
+                <li><strong>Trek Distance:</strong> 16 km from Gaurikund or 9 km from Ransi village</li>
+                <li><strong>Trek Duration:</strong> 6–8 hours (moderate trek)</li>
+                <li><strong>Best For:</strong> Pilgrims, trekkers, nature lovers, spiritual seekers</li>
+            </ul>
+            <h3>⏰ Best Time to Visit Madhyamaheshwar</h3>
+            <ul>
+                <li><strong>May to June:</strong> Temple opens after snow melts; ideal for trekking and sightseeing.</li>
+                <li><strong>September to October:</strong> Clear skies, lush greenery, and pleasant weather.</li>
+                <li><strong>November to April:</strong> Temple remains closed due to heavy snowfall.</li>
+                <li><strong>❌ Avoid monsoon (July–August) due to slippery trails and landslides.</strong></li>
+            </ul>
+            <h3>🚍 How to Reach Madhyamaheshwar</h3>
+            <ul>
+                <li><strong>By Air:</strong> Nearest airport – Jolly Grant Airport, Dehradun (~240 km).</li>
+                <li><strong>By Train:</strong> Nearest railway station – Rishikesh (~212 km).</li>
+                <li><strong>By Road:</strong> Buses and taxis available from Rishikesh, Dehradun, and Uttarkashi to Ransi or Gaurikund, trek starts from there.</li>
+                <li><strong>Trek:</strong> 9–16 km uphill trek depending on starting point.</li>
+            </ul>
+            <h3>🏔️ The Madhyamaheshwar Trek</h3>
+            <ul>
+                <li><strong>Starting Point:</strong> Ransi village (9 km trek) or Gaurikund (16 km trek).</li>
+                <li><strong>Trek Duration:</strong> 3–6 hours depending on route.</li>
+                <li><strong>Route Highlights:</strong> Pine and oak forests, small streams, meadows, Himalayan mountain views.</li>
+                <li><strong>Difficulty Level:</strong> Moderate – suitable for regular trekkers; beginners need proper preparation.</li>
+            </ul>
+            <h3>🛕 About Madhyamaheshwar Temple</h3>
+            <ul>
+                <li>Part of the Panch Kedar Temples: Kedarnath, Tungnath, Rudranath, Madhyamaheshwar, Kalpeshwar.</li>
+                <li>Represents the navel (Madhya) of Lord Shiva.</li>
+                <li>Believed to have been built by the Pandavas to seek forgiveness from Lord Shiva.</li>
+                <li>Stone temple in North Indian Himalayan architectural style.</li>
+                <li>Idol of Shiva worshipped in a lingam form inside the temple.</li>
+            </ul>
+            <h3>✅ Travel Tips for Madhyamaheshwar</h3>
+            <ul>
+                <li>Wear trekking shoes and carry warm clothes, even in summer.</li>
+                <li>Start trek early morning for better visibility and fewer crowds.</li>
+                <li>Carry water, snacks, trekking poles, and light first aid.</li>
+                <li>Camping is possible near the trek route, but carry proper gear.</li>
+                <li>Respect temple rules and local customs; maintain cleanliness.</li>
+            </ul>
+            <div class="inquiry-form-container">
+                <h3>Book Your Adventure!</h3>
+                <form class="inquiry-form" action="https://formspree.io/f/mzzjgvdv" method="POST">
+                    <input type="hidden" name="destination" value="Madmaheshwar">
+                    <div class="form-group"><label for="name-madmaheshwar">Full Name</label><input type="text" id="name-madmaheshwar" name="name" required></div>
+                    <div class="form-group"><label for="email-madmaheshwar">Email Address</label><input type="email" id="email-madmaheshwar" name="email" required></div>
+                    <div class="form-group"><label for="phone-madmaheshwar">Phone Number</label><input type="tel" id="phone-madmaheshwar" name="phone"></div>
+                    <div class="form-group"><label for="travelers-madmaheshwar">Number of Travelers</label><input type="number" id="travelers-madmaheshwar" name="travelers" min="1" required></div>
+                    <div class="form-group full-width"><label for="date-madmaheshwar">Preferred Start Date</label><input type="date" id="date-madmaheshwar" name="date"></div>
+                    <div class="form-group full-width"><label for="message-madmaheshwar">Your Message (optional)</label><textarea id="message-madmaheshwar" name="message"></textarea></div>
+                    <div class="form-group full-width"><button type="submit">Send Inquiry</button></div>
+                </form>
+            </div>
+        </div>
+        <div id="gangotri-info" class="destination-info">
+            <h2>Gangotri – The Origin of the Holy Ganga</h2>
+            <p>Gangotri is a sacred pilgrimage town located in the Uttarkashi district of Uttarakhand, famous as the source of the holy river Ganga. Situated at an altitude of 3,041 meters (9,977 ft) in the Garhwal Himalayas, it is one of the Char Dham Yatra destinations and attracts thousands of pilgrims, trekkers, and nature lovers every year. Gangotri is the starting point of the Bhagirathi River, which later becomes the Ganga, making it a spiritual and natural marvel.</p>
+            <h3>🌄 Why Visit Gangotri?</h3>
+            <ul>
+                <li>Sacred site where the Ganga is worshipped.</li>
+                <li>Starting point for the Gaumukh Glacier trek, the actual origin of the Ganga.</li>
+                <li>Surrounded by snow-capped Himalayan peaks and serene valleys.</li>
+                <li>Ideal for pilgrimage, trekking, and nature photography.</li>
+                <li>Gateway to Badrinath, Kedarnath, and Yamunotri in Uttarakhand.</li>
+            </ul>
+            <h3>📍 Gangotri Travel Details</h3>
+            <ul>
+                <li><strong>Location:</strong> Uttarkashi District, Uttarakhand</li>
+                <li><strong>Altitude:</strong> 3,041 m (9,977 ft)</li>
+                <li><strong>Ideal Trip Duration:</strong> 2–3 days</li>
+                <li><strong>Best For:</strong> Pilgrims, trekkers, spiritual seekers, nature lovers</li>
+            </ul>
+            <h3>⏰ Best Time to Visit Gangotri</h3>
+            <ul>
+                <li><strong>May to June:</strong> Temple opens, pleasant weather, ideal for pilgrimage and trekking.</li>
+                <li><strong>September to October:</strong> Clear skies, post-monsoon greenery, great for photography.</li>
+                <li><strong>November to April:</strong> Temple remains closed due to heavy snowfall.</li>
+                <li><strong>❌ Avoid July–August during monsoon due to slippery roads and landslides.</strong></li>
+            </ul>
+            <h3>🚍 How to Reach Gangotri</h3>
+            <ul>
+                <li><strong>By Air:</strong> Nearest airport – Jolly Grant Airport, Dehradun (~280 km).</li>
+                <li><strong>By Train:</strong> Nearest railway station – Rishikesh (~260 km).</li>
+                <li><strong>By Road:</strong> Well-connected by buses and taxis from Rishikesh, Haridwar, and Uttarkashi.</li>
+                <li><strong>Final Stretch:</strong> Gangotri town is accessible by road; trekking required only for Gaumukh.</li>
+            </ul>
+            <h3>🛕 About Gangotri Temple</h3>
+            <ul>
+                <li>Dedicated to Goddess Ganga, the temple is situated on the banks of the Bhagirathi River.</li>
+                <li>Constructed in 18th century stone architecture style.</li>
+                <li>Temple opens in May and closes in October due to harsh winter conditions.</li>
+                <li>Pilgrims perform rituals at the Ganga River ghat for blessings and holy baths.</li>
+                <li>Gaumukh Glacier, 18 km from Gangotri, is the origin point of the Ganga and a major trekking destination.</li>
+            </ul>
+            <h3>✅ Travel Tips for Gangotri</h3>
+            <ul>
+                <li>Carry warm clothing and trekking gear even in summer.</li>
+                <li>Start early for Gaumukh trek; it’s a moderate to challenging trek.</li>
+                <li>Book stays in Gangotri town or Uttarkashi in advance.</li>
+                <li>Carry water, snacks, and basic first aid for trekking.</li>
+                <li>Respect local customs, temple rules, and maintain cleanliness.</li>
+            </ul>
+            <div class="inquiry-form-container">
+                <h3>Book Your Adventure!</h3>
+                <form class="inquiry-form" action="https://formspree.io/f/mzzjgvdv" method="POST">
+                    <input type="hidden" name="destination" value="Gangotri">
+                    <div class="form-group"><label for="name-gangotri">Full Name</label><input type="text" id="name-gangotri" name="name" required></div>
+                    <div class="form-group"><label for="email-gangotri">Email Address</label><input type="email" id="email-gangotri" name="email" required></div>
+                    <div class="form-group"><label for="phone-gangotri">Phone Number</label><input type="tel" id="phone-gangotri" name="phone"></div>
+                    <div class="form-group"><label for="travelers-gangotri">Number of Travelers</label><input type="number" id="travelers-gangotri" name="travelers" min="1" required></div>
+                    <div class="form-group full-width"><label for="date-gangotri">Preferred Start Date</label><input type="date" id="date-gangotri" name="date"></div>
+                    <div class="form-group full-width"><label for="message-gangotri">Your Message (optional)</label><textarea id="message-gangotri" name="message"></textarea></div>
+                    <div class="form-group full-width"><button type="submit">Send Inquiry</button></div>
+                </form>
+            </div>
+        </div>
+        <div id="varanasi-info" class="destination-info">
+            <h2>Varanasi – The Spiritual Heart of India</h2>
+            <p>Varanasi, also known as Kashi or Benares, is one of the oldest living cities in the world and the spiritual capital of India. Situated on the banks of the holy Ganga River in Uttar Pradesh, Varanasi is famous for its ancient temples, ghats, and rich cultural heritage. The city is a major pilgrimage center for Hindus, where devotees come to bathe in the Ganga, perform rituals, and seek spiritual liberation (Moksha). Varanasi is also known for its silk weaving, classical music, and festivals.</p>
+            <h3>🌄 Why Visit Varanasi?</h3>
+            <ul>
+                <li>Witness the morning Ganga Aarti and evening rituals at the ghats.</li>
+                <li>Explore ancient temples like Kashi Vishwanath, Sankat Mochan, and Durga Temple.</li>
+                <li>Experience the vibrant culture, music, and cuisine of one of India’s oldest cities.</li>
+                <li>Cruise on the Ganga River for a spiritual and scenic experience.</li>
+                <li>Shop for Varanasi silk sarees, handicrafts, and incense.</li>
+            </ul>
+            <h3>📍 Varanasi Travel Details</h3>
+            <ul>
+                <li><strong>Location:</strong> Uttar Pradesh, India</li>
+                <li><strong>Nearest Airport:</strong> Lal Bahadur Shastri International Airport (~26 km)</li>
+                <li><strong>Nearest Railway Station:</strong> Varanasi Junction (major rail hub)</li>
+                <li><strong>Ideal Trip Duration:</strong> 2–3 days</li>
+                <li><strong>Best For:</strong> Pilgrims, spiritual seekers, history lovers, photographers</li>
+            </ul>
+            <h3>⏰ Best Time to Visit Varanasi</h3>
+            <ul>
+                <li><strong>October to March:</strong> Pleasant weather, ideal for sightseeing and river cruises.</li>
+                <li><strong>April to June:</strong> Hot summer; sightseeing possible but daytime heat can be intense.</li>
+                <li><strong>July to September:</strong> Monsoon season; ghats look lush but some roads may be waterlogged.</li>
+            </ul>
+            <h3>🛕 Top Attractions in Varanasi</h3>
+            <ul>
+                <li><strong>Kashi Vishwanath Temple:</strong> Famous Shiva temple and one of the 12 Jyotirlingas.</li>
+                <li><strong>Dashashwamedh Ghat:</strong> Witness the grand Ganga Aarti every evening.</li>
+                <li><strong>Manikarnika Ghat:</strong> Iconic cremation ghat for spiritual seekers.</li>
+                <li><strong>Sarnath:</strong> Buddhist pilgrimage site where Lord Buddha gave his first sermon.</li>
+                <li><strong>Assi Ghat:</strong> Popular ghat for morning boat rides and cultural events.</li>
+                <li><strong>Ramnagar Fort:</strong> Historical fort and museum on the Ganga’s banks.</li>
+            </ul>
+            <h3>✅ Travel Tips for Varanasi</h3>
+            <ul>
+                <li>Wear comfortable clothing and shoes; streets can be crowded.</li>
+                <li>Respect local customs, especially near ghats and temples.</li>
+                <li>Carry water, sunscreen, and mosquito repellent.</li>
+                <li>Use registered boats for Ganga cruises.</li>
+                <li>Try local cuisine like kachaudi sabzi, Banarasi paan, and sweets.</li>
+            </ul>
+            <div class="inquiry-form-container">
+                <h3>Book Your Adventure!</h3>
+                <form class="inquiry-form" action="https://formspree.io/f/mzzjgvdv" method="POST">
+                    <input type="hidden" name="destination" value="Varanasi">
+                    <div class="form-group"><label for="name-varanasi">Full Name</label><input type="text" id="name-varanasi" name="name" required></div>
+                    <div class="form-group"><label for="email-varanasi">Email Address</label><input type="email" id="email-varanasi" name="email" required></div>
+                    <div class="form-group"><label for="phone-varanasi">Phone Number</label><input type="tel" id="phone-varanasi" name="phone"></div>
+                    <div class="form-group"><label for="travelers-varanasi">Number of Travelers</label><input type="number" id="travelers-varanasi" name="travelers" min="1" required></div>
+                    <div class="form-group full-width"><label for="date-varanasi">Preferred Start Date</label><input type="date" id="date-varanasi" name="date"></div>
+                    <div class="form-group full-width"><label for="message-varanasi">Your Message (optional)</label><textarea id="message-varanasi" name="message"></textarea></div>
+                    <div class="form-group full-width"><button type="submit">Send Inquiry</button></div>
+                </form>
+            </div>
+        </div>
+        <div id="agra-info" class="destination-info">
+            <h2>Taj Mahal – The Eternal Symbol of Love</h2>
+            <p>The Taj Mahal, located in Agra, Uttar Pradesh, is one of the most iconic monuments in the world and a UNESCO World Heritage Site. Built by Emperor Shah Jahan in memory of his beloved wife Mumtaz Mahal, the Taj Mahal is an architectural marvel made entirely of white marble and is considered a symbol of eternal love. It is one of the most visited tourist attractions in India, attracting millions of visitors from across the globe every year.</p>
+            <h3>🌄 Why Visit the Taj Mahal?</h3>
+            <ul>
+                <li>Witness the magnificent Mughal architecture with intricate carvings and inlay work.</li>
+                <li>Explore the beautiful gardens, reflecting pools, and minarets surrounding the monument.</li>
+                <li>Capture sunrise or sunset views for breathtaking photography.</li>
+                <li>Learn about the historical and cultural significance of the Mughal era.</li>
+                <li>Experience one of the Seven Wonders of the World.</li>
+            </ul>
+            <h3>📍 Taj Mahal Travel Details</h3>
+            <ul>
+                <li><strong>Location:</strong> Agra, Uttar Pradesh, India</li>
+                <li><strong>Built:</strong> 1632–1653 AD by Emperor Shah Jahan</li>
+                <li><strong>Material:</strong> White marble with semi-precious stones</li>
+                <li><strong>Ideal Trip Duration:</strong> Half-day to full-day visit</li>
+                <li><strong>Best For:</strong> History lovers, architecture enthusiasts, photographers, tourists</li>
+            </ul>
+            <h3>⏰ Best Time to Visit the Taj Mahal</h3>
+            <ul>
+                <li><strong>October to March:</strong> Pleasant weather and clear skies, ideal for sightseeing and photography.</li>
+                <li><strong>April to June:</strong> Hot summer months, can be tiring to explore.</li>
+                <li><strong>July to September:</strong> Monsoon season; gardens are lush, but it may rain occasionally.</li>
+            </ul>
+            <h3>🚍 How to Reach the Taj Mahal</h3>
+            <ul>
+                <li><strong>By Air:</strong> Agra Airport (~13 km from Taj Mahal) or Indira Gandhi International Airport, Delhi (~230 km).</li>
+                <li><strong>By Train:</strong> Agra Cantt Railway Station (~6 km) or Agra Fort Railway Station (~2.5 km).</li>
+                <li><strong>By Road:</strong> Well-connected via buses, taxis, and private cabs from Delhi, Jaipur, and other nearby cities.</li>
+            </ul>
+            <h3>🏛️ Taj Mahal Highlights</h3>
+            <ul>
+                <li><strong>Main Mausoleum:</strong> Houses the tombs of Shah Jahan and Mumtaz Mahal.</li>
+                <li><strong>Charbagh Gardens:</strong> Symmetrical Mughal-style gardens with reflecting pools.</li>
+                <li><strong>Minarets:</strong> Four slender towers at the corners of the platform.</li>
+                <li><strong>Mehtab Bagh:</strong> Across the Yamuna River, offers perfect sunset views of the Taj.</li>
+                <li><strong>Intricate Marble Inlay Work:</strong> Semi-precious stones form beautiful floral patterns.</li>
+            </ul>
+            <h3>✅ Travel Tips for the Taj Mahal</h3>
+            <ul>
+                <li>Arrive early in the morning to avoid crowds and witness the sunrise.</li>
+                <li>Book tickets online in advance to skip queues.</li>
+                <li>Avoid large bags; only small handbags are allowed inside.</li>
+                <li>Hire a local guide or audio guide for historical insights.</li>
+                <li>Respect monument rules and maintain cleanliness.</li>
+            </ul>
+            <div class="inquiry-form-container">
+                <h3>Book Your Adventure!</h3>
+                <form class="inquiry-form" action="https://formspree.io/f/mzzjgvdv" method="POST">
+                    <input type="hidden" name="destination" value="Agra">
+                    <div class="form-group"><label for="name-agra">Full Name</label><input type="text" id="name-agra" name="name" required></div>
+                    <div class="form-group"><label for="email-agra">Email Address</label><input type="email" id="email-agra" name="email" required></div>
+                    <div class="form-group"><label for="phone-agra">Phone Number</label><input type="tel" id="phone-agra" name="phone"></div>
+                    <div class="form-group"><label for="travelers-agra">Number of Travelers</label><input type="number" id="travelers-agra" name="travelers" min="1" required></div>
+                    <div class="form-group full-width"><label for="date-agra">Preferred Start Date</label><input type="date" id="date-agra" name="date"></div>
+                    <div class="form-group full-width"><label for="message-agra">Your Message (optional)</label><textarea id="message-agra" name="message"></textarea></div>
+                    <div class="form-group full-width"><button type="submit">Send Inquiry</button></div>
+                </form>
+            </div>
+        </div>
+        <div id="bodhgaya-info" class="destination-info">
+            <h2>Bodh Gaya – The Sacred Land of Enlightenment</h2>
+            <p>Bodh Gaya, located in Gaya district, Bihar, is one of the most revered Buddhist pilgrimage sites in the world. It is here that Lord Buddha attained enlightenment under the Bodhi Tree, making it the spiritual center of Buddhism. The town is visited by pilgrims from all over the world, and it features ancient temples, monasteries, and meditation centers, offering a serene environment for spiritual seekers.</p>
+            <h3>🌄 Why Visit Bodh Gaya?</h3>
+            <ul>
+                <li>Witness the Mahabodhi Temple, a UNESCO World Heritage Site, at the site of Buddha’s enlightenment.</li>
+                <li>Meditate under the Bodhi Tree, where Buddha attained Nirvana.</li>
+                <li>Explore international Buddhist monasteries, built by countries like Thailand, Japan, Myanmar, and Tibet.</li>
+                <li>Attend Buddhist festivals and meditation sessions.</li>
+                <li>Learn about the history and teachings of Buddhism in a spiritual setting.</li>
+            </ul>
+            <h3>📍 Bodh Gaya Travel Details</h3>
+            <ul>
+                <li><strong>Location:</strong> Gaya District, Bihar, India</li>
+                <li><strong>Altitude:</strong> 111 meters (364 ft) above sea level</li>
+                <li><strong>Ideal Trip Duration:</strong> 1–2 days</li>
+                <li><strong>Best For:</strong> Pilgrims, spiritual seekers, history enthusiasts, photographers</li>
+            </ul>
+            <h3>⏰ Best Time to Visit Bodh Gaya</h3>
+            <ul>
+                <li><strong>October to March:</strong> Pleasant weather, ideal for sightseeing and meditation.</li>
+                <li><strong>April to June:</strong> Summer can be hot and humid; daytime sightseeing may be tiring.</li>
+                <li><strong>July to September:</strong> Monsoon season; heavy rains may disrupt travel.</li>
+            </ul>
+            <h3>🚍 How to Reach Bodh Gaya</h3>
+            <ul>
+                <li><strong>By Air:</strong> Gaya Airport (~12 km from town), well-connected with major cities.</li>
+                <li><strong>By Train:</strong> Bodh Gaya Railway Station, connected to Patna, Gaya, and other cities.</li>
+                <li><strong>By Road:</strong> Well-connected via buses and taxis from Patna, Gaya, and Rajgir.</li>
+            </ul>
+            <h3>🏛️ Major Attractions in Bodh Gaya</h3>
+            <ul>
+                <li><strong>Mahabodhi Temple:</strong> The main temple built over the spot where Buddha attained enlightenment.</li>
+                <li><strong>Bodhi Tree:</strong> Sacred tree under which Buddha meditated for 49 days.</li>
+                <li><strong>Great Buddha Statue:</strong> 80-foot tall statue, a major landmark in Bodh Gaya.</li>
+                <li><strong>Thai Monastery, Japanese Temple, Tibetan Monastery:</strong> Showcasing international Buddhist architecture.</li>
+                <li><strong>Dhamma Patthana:</strong> Vipassana meditation center for spiritual seekers.</li>
+                <li><strong>Archaeological Museum:</strong> Houses ancient Buddhist artifacts and scriptures.</li>
+            </ul>
+            <h3>✅ Travel Tips for Bodh Gaya</h3>
+            <ul>
+                <li>Dress modestly when visiting temples and monasteries.</li>
+                <li>Respect meditation spaces and maintain silence.</li>
+                <li>Carry water, sunscreen, and comfortable walking shoes.</li>
+                <li>Early morning visits are ideal to experience peaceful meditation and fewer crowds.</li>
+                <li>Photography is allowed in most areas but avoid sacred rituals without permission.</li>
+            </ul>
+            <div class="inquiry-form-container">
+                <h3>Book Your Adventure!</h3>
+                <form class="inquiry-form" action="https://formspree.io/f/mzzjgvdv" method="POST">
+                    <input type="hidden" name="destination" value="Bodh Gaya">
+                    <div class="form-group"><label for="name-bodhgaya">Full Name</label><input type="text" id="name-bodhgaya" name="name" required></div>
+                    <div class="form-group"><label for="email-bodhgaya">Email Address</label><input type="email" id="email-bodhgaya" name="email" required></div>
+                    <div class="form-group"><label for="phone-bodhgaya">Phone Number</label><input type="tel" id="phone-bodhgaya" name="phone"></div>
+                    <div class="form-group"><label for="travelers-bodhgaya">Number of Travelers</label><input type="number" id="travelers-bodhgaya" name="travelers" min="1" required></div>
+                    <div class="form-group full-width"><label for="date-bodhgaya">Preferred Start Date</label><input type="date" id="date-bodhgaya" name="date"></div>
+                    <div class="form-group full-width"><label for="message-bodhgaya">Your Message (optional)</label><textarea id="message-bodhgaya" name="message"></textarea></div>
+                    <div class="form-group full-width"><button type="submit">Send Inquiry</button></div>
+                </form>
+            </div>
+        </div>
+        <div id="rajgir-info" class="destination-info">
+            <h2>Rajgir – The Ancient City of History and Spirituality</h2>
+            <p>Rajgir, located in Nalanda district, Bihar, is an ancient city renowned for its historical significance, spiritual heritage, and natural beauty. Surrounded by seven hills, Rajgir has been a center of Buddhism, Jainism, and ancient Indian history for centuries. It was the first capital of the Magadha kingdom and a favorite retreat of Lord Buddha and Lord Mahavira, making it a spiritual and historical hub in India.</p>
+            <h3>🌄 Why Visit Rajgir?</h3>
+            <ul>
+                <li>Explore ancient Buddhist and Jain sites, including the Vishwa Shanti Stupa and Griddhakuta Hill.</li>
+                <li>Witness hot springs and natural scenic beauty in the Rajgir valley.</li>
+                <li>Visit ancient fort ruins, monasteries, and temples dating back thousands of years.</li>
+                <li>Ideal for history enthusiasts, pilgrims, and nature lovers.</li>
+                <li>Part of the Buddhist Circuit, including Bodh Gaya, Nalanda, and Kushinagar.</li>
+            </ul>
+            <h3>📍 Rajgir Travel Details</h3>
+            <ul>
+                <li><strong>Location:</strong> Nalanda District, Bihar, India</li>
+                <li><strong>Altitude:</strong> 99 meters (325 ft)</li>
+                <li><strong>Ideal Trip Duration:</strong> 1–2 days</li>
+                <li><strong>Best For:</strong> Pilgrims, history lovers, adventure seekers, photographers</li>
+            </ul>
+            <h3>⏰ Best Time to Visit Rajgir</h3>
+            <ul>
+                <li><strong>October to March:</strong> Pleasant weather, ideal for sightseeing and trekking.</li>
+                <li><strong>April to June:</strong> Summer can be hot; early morning visits recommended.</li>
+                <li><strong>July to September:</strong> Monsoon season; lush greenery but some areas may be slippery.</li>
+            </ul>
+            <h3>🚍 How to Reach Rajgir</h3>
+            <ul>
+                <li><strong>By Air:</strong> Nearest airport – Gaya Airport (~70 km), connected to major cities.</li>
+                <li><strong>By Train:</strong> Rajgir Railway Station, connected with Patna, Gaya, and other cities.</li>
+                <li><strong>By Road:</strong> Buses and taxis available from Patna (~100 km), Gaya (~70 km), and Nalanda (~13 km).</li>
+            </ul>
+            <h3>🏞️ Major Attractions in Rajgir</h3>
+            <ul>
+                <li><strong>Vishwa Shanti Stupa (Peace Pagoda):</strong> Buddhist stupa atop Ratnagiri Hill with panoramic views.</li>
+                <li><strong>Griddhakuta Hill (Vulture’s Peak):</strong> Where Buddha delivered several sermons; accessible by ropeway.</li>
+                <li><strong>Hot Springs at Swarna Rekha:</strong> Natural sulfur springs believed to have healing properties.</li>
+                <li><strong>Rajgir Ropeway:</strong> Cable car connecting city to Vishwa Shanti Stupa.</li>
+                <li><strong>Nalanda Ruins:</strong> Ancient seat of learning, UNESCO World Heritage Site nearby.</li>
+                <li><strong>Jain Temples:</strong> Historical temples at Rajgir hills dedicated to Lord Mahavira.</li>
+            </ul>
+            <h3>✅ Travel Tips for Rajgir</h3>
+            <ul>
+                <li>Use comfortable walking shoes for exploring hills and ropeway rides.</li>
+                <li>Carry water, sunscreen, and light snacks.</li>
+                <li>Respect religious sites and maintain cleanliness.</li>
+                <li>Early morning visits to Vishwa Shanti Stupa are ideal for sunrise photography.</li>
+                <li>Monsoon visits require caution due to slippery trails.</li>
+            </ul>
+            <div class="inquiry-form-container">
+                <h3>Book Your Adventure!</h3>
+                <form class="inquiry-form" action="https://formspree.io/f/mzzjgvdv" method="POST">
+                    <input type="hidden" name="destination" value="Rajgir">
+                    <div class="form-group"><label for="name-rajgir">Full Name</label><input type="text" id="name-rajgir" name="name" required></div>
+                    <div class="form-group"><label for="email-rajgir">Email Address</label><input type="email" id="email-rajgir" name="email" required></div>
+                    <div class="form-group"><label for="phone-rajgir">Phone Number</label><input type="tel" id="phone-rajgir" name="phone"></div>
+                    <div class="form-group"><label for="travelers-rajgir">Number of Travelers</label><input type="number" id="travelers-rajgir" name="travelers" min="1" required></div>
+                    <div class="form-group full-width"><label for="date-rajgir">Preferred Start Date</label><input type="date" id="date-rajgir" name="date"></div>
+                    <div class="form-group full-width"><label for="message-rajgir">Your Message (optional)</label><textarea id="message-rajgir" name="message"></textarea></div>
+                    <div class="form-group full-width"><button type="submit">Send Inquiry</button></div>
+                </form>
+            </div>
+        </div>
+        <div id="sasaram-info" class="destination-info">
+            <h2>Sasaram – The Historical Gem of Bihar</h2>
+            <p>Sasaram, located in Rohtas district, Bihar, is a city rich in historical and cultural heritage. Famous as the birthplace of Sher Shah Suri, the great Mughal-era ruler, Sasaram is home to architectural marvels, tombs, and forts that reflect India’s medieval history. It is a destination for history enthusiasts, architecture lovers, and travelers seeking cultural experiences.</p>
+            <h3>🌄 Why Visit Sasaram?</h3>
+            <ul>
+                <li>Explore the Sher Shah Suri Tomb, an architectural masterpiece of Indo-Islamic style.</li>
+                <li>Visit the Rohtasgarh Fort, a massive fort with historical significance and panoramic views.</li>
+                <li>Discover ancient mosques, tombs, and medieval structures in the city.</li>
+                <li>Learn about the legacy of Sher Shah Suri, the builder of the Grand Trunk Road.</li>
+                <li>Ideal for history, architecture, and photography enthusiasts.</li>
+            </ul>
+            <h3>📍 Sasaram Travel Details</h3>
+            <ul>
+                <li><strong>Location:</strong> Rohtas District, Bihar, India</li>
+                <li><strong>Altitude:</strong> 121 meters (397 ft)</li>
+                <li><strong>Ideal Trip Duration:</strong> 1–2 days</li>
+                <li><strong>Best For:</strong> History lovers, architecture enthusiasts, cultural travelers</li>
+            </ul>
+            <h3>⏰ Best Time to Visit Sasaram</h3>
+            <ul>
+                <li><strong>October to March:</strong> Pleasant weather, ideal for sightseeing and exploring historical sites.</li>
+                <li><strong>April to June:</strong> Hot summer; outdoor visits may be tiring.</li>
+                <li><strong>July to September:</strong> Monsoon season; lush surroundings but some areas may be slippery.</li>
+            </ul>
+            <h3>🚍 How to Reach Sasaram</h3>
+            <ul>
+                <li><strong>By Air:</strong> Nearest airport – Gaya Airport (~100 km), Patna Airport (~170 km).</li>
+                <li><strong>By Train:</strong> Sasaram Railway Station, well-connected with Patna, Gaya, and other cities.</li>
+                <li><strong>By Road:</strong> Buses and taxis available from Patna (~170 km), Gaya (~100 km), and neighboring towns.</li>
+            </ul>
+            <h3>🏛️ Major Attractions in Sasaram</h3>
+            <ul>
+                <li><strong>Sher Shah Suri Tomb:</strong> Grand Indo-Islamic style tomb built in the 16th century; surrounded by gardens and water channels.</li>
+                <li><strong>Rohtasgarh Fort:</strong> Historical fort perched on a hill offering scenic views and rich history.</li>
+                <li><strong>Shershah Suri Mosque:</strong> Ancient mosque showcasing medieval architecture.</li>
+                <li><strong>Grand Trunk Road Legacy:</strong> Explore the historical significance of the road built by Sher Shah Suri.</li>
+                <li><strong>Nearby Waterfalls and Scenic Spots:</strong> Kaimur hills and waterfalls nearby for nature lovers.</li>
+            </ul>
+            <h3>✅ Travel Tips for Sasaram</h3>
+            <ul>
+                <li>Wear comfortable walking shoes for exploring forts and historical sites.</li>
+                <li>Carry water, sunscreen, and a camera for photography.</li>
+                <li>Hire a local guide to understand the history and architecture better.</li>
+                <li>Best to visit early in the day to avoid the afternoon heat.</li>
+                <li>Respect heritage sites; avoid littering or climbing on protected structures.</li>
+            </ul>
+            <div class="inquiry-form-container">
+                <h3>Book Your Adventure!</h3>
+                <form class="inquiry-form" action="https://formspree.io/f/mzzjgvdv" method="POST">
+                    <input type="hidden" name="destination" value="Sasaram">
+                    <div class="form-group"><label for="name-sasaram">Full Name</label><input type="text" id="name-sasaram" name="name" required></div>
+                    <div class="form-group"><label for="email-sasaram">Email Address</label><input type="email" id="email-sasaram" name="email" required></div>
+                    <div class="form-group"><label for="phone-sasaram">Phone Number</label><input type="tel" id="phone-sasaram" name="phone"></div>
+                    <div class="form-group"><label for="travelers-sasaram">Number of Travelers</label><input type="number" id="travelers-sasaram" name="travelers" min="1" required></div>
+                    <div class="form-group full-width"><label for="date-sasaram">Preferred Start Date</label><input type="date" id="date-sasaram" name="date"></div>
+                    <div class="form-group full-width"><label for="message-sasaram">Your Message (optional)</label><textarea id="message-sasaram" name="message"></textarea></div>
+                    <div class="form-group full-width"><button type="submit">Send Inquiry</button></div>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script>
+        $(document).ready(function() {
+            $('#current-year').text(new Date().getFullYear());
+            $('.mobile-menu-btn').click(function() { $('.nav-links').toggleClass('active'); });
+
+            $('a[href*="#"]').on('click', function(e) {
+                if (this.hash !== "") {
+                    e.preventDefault();
+                    const headerHeight = $('header').outerHeight();
+                    const target = $(this.hash);
+                    if (target.length) {
+                        $('html, body').stop().animate({ scrollTop: target.offset().top - headerHeight }, 800, 'swing');
+                    }
+                    if ($('.nav-links').hasClass('active')) { $('.nav-links').removeClass('active'); }
+                }
+            });
+
+            $(window).scroll(function() {
+                if ($(this).scrollTop() > 300) { $('.back-to-top').fadeIn(); } 
+                else { $('.back-to-top').fadeOut(); }
+            });
+
+            $('.back-to-top').click(function() { $('html, body').animate({ scrollTop: 0 }, 800, 'swing'); });
+
+            $('#heroSearchForm').on('submit', function(e) {
+                e.preventDefault();
+                const searchTerm = $('#heroSearchInput').val();
+                $('#destinationSearch').val(searchTerm).trigger('keyup');
+                const headerHeight = $('header').outerHeight();
+                const target = $('#services-section');
+                if (target.length) {
+                    $('html, body').stop().animate({ scrollTop: target.offset().top - headerHeight }, 800, 'swing');
+                }
+            });
+            
+            function applyFilters() {
+                const activeState = $('#state-filters .active').data('state');
+                const activeType = $('#type-filters .active').data('type');
+                let found = 0;
+                $('.service-item').each(function() {
+                    const itemState = $(this).data('state');
+                    const itemCategories = $(this).data('category') || '';
+                    const stateMatch = activeState === 'all' || itemState === activeState;
+                    const typeMatch = activeType === 'all' || itemCategories.includes(activeType);
+                    if (stateMatch && typeMatch) {
+                        $(this).fadeIn(300);
+                        found++;
+                    } else {
+                        $(this).fadeOut(300);
+                    }
+                });
+                if (found === 0) { $('#noResultsMessage').fadeIn(300); } 
+                else { $('#noResultsMessage').fadeOut(300); }
+            }
+
+            $('.filter-btn-state').click(function() {
+                $('#destinationSearch').val('');
+                $('.filter-btn-state').removeClass('active');
+                $(this).addClass('active');
+                applyFilters();
+            });
+
+            $('.filter-btn-type').click(function() {
+                $('#destinationSearch').val('');
+                $('.filter-btn-type').removeClass('active');
+                $(this).addClass('active');
+                applyFilters();
+            });
+
+            $('#destinationSearch').on('keyup', function() {
+                const searchTerm = $(this).val().toLowerCase();
+                let found = 0;
+                $('.filter-btn').removeClass('active');
+                $('#state-filters .filter-btn-state[data-state="all"]').addClass('active');
+                $('#type-filters .filter-btn-type[data-type="all"]').addClass('active');
+                $('.service-item').each(function() {
+                    const destinationName = $(this).find('h3').text().toLowerCase();
+                    if (destinationName.includes(searchTerm)) {
+                        $(this).fadeIn(300);
+                        found++;
+                    } else {
+                        $(this).fadeOut(300);
+                    }
+                });
+                if (found === 0) { $('#noResultsMessage').fadeIn(300); } 
+                else { $('#noResultsMessage').fadeOut(300); }
+            });
+            
+            $('.service-item').on('click', function() {
+                const targetId = $(this).data('modal-target');
+                const contentHtml = $(targetId).html();
+                if (contentHtml) {
+                    $('#modalBody').html(contentHtml);
+                    $('#destinationModal').css('display', 'flex').hide().fadeIn(300);
+                    $('body').addClass('modal-open');
+                }
+            });
+
+            function closeModal() {
+                $('#destinationModal').fadeOut(300);
+                $('body').removeClass('modal-open');
+            }
+            $('.modal-close-btn').on('click', closeModal);
+            $('.modal-overlay').on('click', function(e) {
+                if ($(e.target).is('.modal-overlay')) { closeModal(); }
+            });
+
+            let userChoices = {};
+            function showStep(stepNumber) {
+                $('.genie-step').removeClass('active');
+                $('#step' + stepNumber).addClass('active');
+            }
+            $('#step1 .option-card').on('click', function() { userChoices.travelerType = $(this).data('choice'); showStep(2); });
+            $('#step2 .option-card').on('click', function() { userChoices.vibe = $(this).data('choice'); showStep(3); });
+            $('#budgetSlider').on('input', function() { $('#budgetValue').text('₹' + $(this).val().toLocaleString('en-IN')); });
+            $('#findTripBtn').on('click', function() { userChoices.budget = parseInt($('#budgetSlider').val()); showStep(4); findRecommendations(); });
+            function findRecommendations() {
+                $('#genieSpinner').show();
+                $('#genieResults').empty();
+                const destinations = [
+                    { name: 'Dharamshala/McLeod Ganj', cost: 3000, vibes: ['relaxing', 'exploring'], types: ['solo', 'couple', 'friends', 'family'], summary: 'A peaceful blend of Tibetan culture and nature.'},
+                    { name: 'Triund', cost: 3500, vibes: ['adventure', 'exploring'], types: ['solo', 'friends'], summary: 'A rewarding trek with stunning Himalayan views.'},
+                    { name: 'Kasol', cost: 4200, vibes: ['relaxing', 'exploring'], types: ['solo', 'friends'], summary: 'Riverside charm in the Parvati Valley, great for backpackers.'},
+                    { name: 'Kedarnath', cost: 4500, vibes: ['adventure', 'exploring'], types: ['solo', 'friends', 'family'], summary: 'A revered pilgrimage amidst the majestic Garhwal Himalayas.'},
+                    { name: 'Tungnath/Chopta', cost: 5000, vibes: ['adventure'], types: ['friends', 'solo'], summary: 'Home to the world\'s highest Shiva temple and 360-degree views.'},
+                    { name: 'Manali', cost: 5800, vibes: ['adventure', 'exploring', 'relaxing'], types: ['couple', 'friends', 'family'], summary: 'A hub for adventure sports, cafes, and scenic beauty.'},
+                    { name: 'Rohtang Pass', cost: 6200, vibes: ['adventure'], types: ['friends', 'couple'], summary: 'High-altitude pass with snow activities and breathtaking landscapes.'}
+                ];
+                setTimeout(() => {
+                    $('#genieSpinner').hide();
+                    const budget = userChoices.budget;
+                    const stretchBudget = budget * 1.3;
+                    const perfectMatches = destinations.filter(d => d.cost <= budget && d.vibes.includes(userChoices.vibe) && d.types.includes(userChoices.travelerType));
+                    const stretchMatches = destinations.filter(d => d.cost > budget && d.cost <= stretchBudget && d.vibes.includes(userChoices.vibe) && d.types.includes(userChoices.travelerType));
+                    let resultsHtml = '';
+                    const renderCard = (dest, cardClass) => `<div class="${cardClass}"><div class="card-header"><h4>${dest.name}</h4><p>Approx. Cost: ₹${dest.cost.toLocaleString('en-IN')} per person</p></div><div class="card-body"><p>${dest.summary}</p></div></div>`;
+                    if (perfectMatches.length > 0) { resultsHtml += `<h3>Perfect Matches!</h3>`; perfectMatches.forEach(dest => resultsHtml += renderCard(dest, 'recommendation-card')); }
+                    if (stretchMatches.length > 0) { resultsHtml += `<h3 style="margin-top: 30px;">Stretch Your Budget? ✨</h3>`; stretchMatches.forEach(dest => resultsHtml += renderCard(dest, 'stretch-recommendation-card')); }
+                    if (resultsHtml === '') { resultsHtml = `<h3>No exact matches found!</h3><p>Try different options, or <a href="#contact-section" style="color: #ff6347;">contact us</a> for a custom plan!</p>`; } 
+                    else { resultsHtml += `<p style="margin-top:20px;"><a href="#contact-section" style="color: #ff6347; font-weight: bold;">Contact us to book your trip!</a></p>`; }
+                    $('#genieResults').html(resultsHtml);
+                }, 1500);
+            }
+        });
+    </script>
+</body>
+</html>
+
